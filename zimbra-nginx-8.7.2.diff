@@ -1,0 +1,193 @@
+diff -Naurw zimbra-old/nginx.conf.mail.imap.default.template zimbra-new/nginx.conf.mail.imap.default.template
+--- zimbra-old/nginx.conf.mail.imap.default.template	2017-02-05 21:21:44.000000000 +0700
++++ zimbra-new/nginx.conf.mail.imap.default.template	2017-02-05 21:25:08.000000000 +0700
+@@ -2,7 +2,8 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen                  [::]:${mail.imap.port} ipv6only=off;
++    ${core.ipboth.enabled}listen                  ${mail.imap.port};
++    ${core.ipboth.enabled}listen                  [::]:${mail.imap.port};
+     ${core.ipv4only.enabled}listen                ${mail.imap.port};
+     ${core.ipv6only.enabled}listen                [::]:${mail.imap.port};
+     ${web.ssl.dhparam.enabled}ssl_dhparam         ${web.ssl.dhparam.file};
+diff -Naurw zimbra-old/nginx.conf.mail.imaps.default.template zimbra-new/nginx.conf.mail.imaps.default.template
+--- zimbra-old/nginx.conf.mail.imaps.default.template	2017-02-05 21:22:07.000000000 +0700
++++ zimbra-new/nginx.conf.mail.imaps.default.template	2017-02-05 21:25:24.000000000 +0700
+@@ -2,7 +2,8 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen                  [::]:${mail.imaps.port} ipv6only=off;
++    ${core.ipboth.enabled}listen                  ${mail.imaps.port};
++    ${core.ipboth.enabled}listen                  [::]:${mail.imaps.port};
+     ${core.ipv4only.enabled}listen                ${mail.imaps.port};
+     ${core.ipv6only.enabled}listen                [::]:${mail.imaps.port};
+     ${web.ssl.dhparam.enabled}ssl_dhparam         ${web.ssl.dhparam.file};
+diff -Naurw zimbra-old/nginx.conf.mail.imaps.template zimbra-new/nginx.conf.mail.imaps.template
+--- zimbra-old/nginx.conf.mail.imaps.template	2017-02-05 21:22:17.000000000 +0700
++++ zimbra-new/nginx.conf.mail.imaps.template	2017-02-05 23:43:17.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name         ${vhn};
+-    ${core.ipboth.enabled}listen              ${vip}${mail.imaps.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen            ${vip}${mail.imaps.port};
+-    ${core.ipv6only.enabled}listen            ${vip}${mail.imaps.port};
++    ${core.ipboth.enabled}listen              ${mail.imaps.port};
++    ${core.ipboth.enabled}listen              [::]:${mail.imaps.port};
++    ${core.ipv4only.enabled}listen            ${mail.imaps.port};
++    ${core.ipv6only.enabled}listen            [::]:${mail.imaps.port};
+     protocol            imap;
+     proxy               on;
+     timeout             ${mail.imap.timeout};
+diff -Naurw zimbra-old/nginx.conf.mail.imap.template zimbra-new/nginx.conf.mail.imap.template
+--- zimbra-old/nginx.conf.mail.imap.template	2017-02-05 21:21:54.000000000 +0700
++++ zimbra-new/nginx.conf.mail.imap.template	2017-02-05 23:42:59.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name             ${vhn};
+-    ${core.ipboth.enabled}listen                  ${vip}${mail.imap.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen                  ${vip}${mail.imap.port};
+-    ${core.ipv6only.enabled}listen                  ${vip}${mail.imap.port};
++    ${core.ipboth.enabled}listen                  ${mail.imap.port};
++    ${core.ipboth.enabled}listen                  [::]:${mail.imap.port};
++    ${core.ipv4only.enabled}listen                  ${mail.imap.port};
++    ${core.ipv6only.enabled}listen                  [::]:${mail.imap.port};
+     protocol                imap;
+     proxy                   on;
+     timeout                 ${mail.imap.timeout};
+diff -Naurw zimbra-old/nginx.conf.mail.pop3.default.template zimbra-new/nginx.conf.mail.pop3.default.template
+--- zimbra-old/nginx.conf.mail.pop3.default.template	2017-02-05 21:22:36.000000000 +0700
++++ zimbra-new/nginx.conf.mail.pop3.default.template	2017-02-05 21:25:36.000000000 +0700
+@@ -2,7 +2,8 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen                  [::]:${mail.pop3.port} ipv6only=off;
++    ${core.ipboth.enabled}listen                  ${mail.pop3.port};
++    ${core.ipboth.enabled}listen                  [::]:${mail.pop3.port};
+     ${core.ipv4only.enabled}listen                ${mail.pop3.port};
+     ${core.ipv6only.enabled}listen                [::]:${mail.pop3.port};
+     ${web.ssl.dhparam.enabled}ssl_dhparam         ${web.ssl.dhparam.file};
+diff -Naurw zimbra-old/nginx.conf.mail.pop3s.default.template zimbra-new/nginx.conf.mail.pop3s.default.template
+--- zimbra-old/nginx.conf.mail.pop3s.default.template	2017-02-05 21:23:11.000000000 +0700
++++ zimbra-new/nginx.conf.mail.pop3s.default.template	2017-02-05 21:25:53.000000000 +0700
+@@ -2,7 +2,8 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen              [::]:${mail.pop3s.port} ipv6only=off;
++    ${core.ipboth.enabled}listen              ${mail.pop3s.port};
++    ${core.ipboth.enabled}listen              [::]:${mail.pop3s.port};
+     ${core.ipv4only.enabled}listen            ${mail.pop3s.port};
+     ${core.ipv6only.enabled}listen            [::]:${mail.pop3s.port};
+     ${web.ssl.dhparam.enabled}ssl_dhparam     ${web.ssl.dhparam.file};
+diff -Naurw zimbra-old/nginx.conf.mail.pop3s.template zimbra-new/nginx.conf.mail.pop3s.template
+--- zimbra-old/nginx.conf.mail.pop3s.template	2017-02-05 21:23:21.000000000 +0700
++++ zimbra-new/nginx.conf.mail.pop3s.template	2017-02-05 23:43:50.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name         ${vhn};
+-    ${core.ipboth.enabled}listen              ${vip}${mail.pop3s.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen            ${vip}${mail.pop3s.port};
+-    ${core.ipv6only.enabled}listen            ${vip}${mail.pop3s.port};
++    ${core.ipboth.enabled}listen              ${mail.pop3s.port};
++    ${core.ipboth.enabled}listen              [::]:${mail.pop3s.port};
++    ${core.ipv4only.enabled}listen            ${mail.pop3s.port};
++    ${core.ipv6only.enabled}listen            [::]:${mail.pop3s.port};
+     protocol            pop3;
+     proxy               on;
+     timeout             ${mail.pop3.timeout};
+diff -Naurw zimbra-old/nginx.conf.mail.pop3.template zimbra-new/nginx.conf.mail.pop3.template
+--- zimbra-old/nginx.conf.mail.pop3.template	2017-02-05 21:23:01.000000000 +0700
++++ zimbra-new/nginx.conf.mail.pop3.template	2017-02-05 23:43:33.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name             ${vhn};
+-    ${core.ipboth.enabled}listen                  ${vip}${mail.pop3.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen                  ${vip}${mail.pop3.port};
+-    ${core.ipv6only.enabled}listen                  ${vip}${mail.pop3.port};
++    ${core.ipboth.enabled}listen                  ${mail.pop3.port};
++    ${core.ipboth.enabled}listen                  [::]:${mail.pop3.port};
++    ${core.ipv4only.enabled}listen                  ${mail.pop3.port};
++    ${core.ipv6only.enabled}listen                  [::]:${mail.pop3.port};
+     protocol                pop3;
+     proxy                   on;
+     timeout                 ${mail.pop3.timeout};
+diff -Naurw zimbra-old/nginx.conf.web.http.default.template zimbra-new/nginx.conf.web.http.default.template
+--- zimbra-old/nginx.conf.web.http.default.template	2017-02-05 21:23:43.000000000 +0700
++++ zimbra-new/nginx.conf.web.http.default.template	2017-02-05 23:44:15.000000000 +0700
+@@ -2,10 +2,11 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen    [::]:${web.http.port} default ipv6only=off;
+-    ${core.ipv4only.enabled}listen    ${web.http.port} default;
+-    ${core.ipv6only.enabled}listen    [::]:${web.http.port} default;
+-    server_name             ${web.server_name.default}.default;
++    ${core.ipboth.enabled}listen    ${web.http.port} default_server;
++    ${core.ipboth.enabled}listen    [::]:${web.http.port} default_server;
++    ${core.ipv4only.enabled}listen    ${web.http.port} default_server;
++    ${core.ipv6only.enabled}listen    [::]:${web.http.port} default_server;
++    server_name             ${web.server_name.default};
+     client_max_body_size 0;
+     include                 ${core.includes}/${core.cprefix}.web.http.mode-${web.mailmode};
+ 
+diff -Naurw zimbra-old/nginx.conf.web.https.default.template zimbra-new/nginx.conf.web.https.default.template
+--- zimbra-old/nginx.conf.web.https.default.template	2017-02-05 21:24:16.000000000 +0700
++++ zimbra-new/nginx.conf.web.https.default.template	2017-02-05 23:44:49.000000000 +0700
+@@ -2,11 +2,12 @@
+ #
+ server
+ {
+-    ${core.ipboth.enabled}listen                  [::]:${web.https.port} default ipv6only=off;
+-    ${core.ipv4only.enabled}listen                ${web.https.port} default;
+-    ${core.ipv6only.enabled}listen                [::]:${web.https.port} default;
++    ${core.ipboth.enabled}listen                  ${web.https.port} default_server;
++    ${core.ipboth.enabled}listen                  [::]:${web.https.port} default_server;
++    ${core.ipv4only.enabled}listen                ${web.https.port} default_server;
++    ${core.ipv6only.enabled}listen                [::]:${web.https.port} default_server;
+     ${web.add.headers.default}
+-    server_name             ${web.server_name.default}.default;
++    server_name             ${web.server_name.default};
+     client_max_body_size    0;
+     ssl                     on;
+     ssl_protocols           ${web.ssl.protocols};
+diff -Naurw zimbra-old/nginx.conf.web.https.template zimbra-new/nginx.conf.web.https.template
+--- zimbra-old/nginx.conf.web.https.template	2017-02-05 21:31:08.000000000 +0700
++++ zimbra-new/nginx.conf.web.https.template	2017-02-05 23:45:04.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name             ${vhn};
+-    ${core.ipboth.enabled}listen                  ${vip}${web.https.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen                  ${vip}${web.https.port};
+-    ${core.ipv6only.enabled}listen                  ${vip}${web.https.port};
++    ${core.ipboth.enabled}listen                  ${web.https.port};
++    ${core.ipboth.enabled}listen                  [::]:${web.https.port};
++    ${core.ipv4only.enabled}listen                  ${web.https.port};
++    ${core.ipv6only.enabled}listen                  [::]:${web.https.port};
+     ${web.add.headers.vhost}
+     client_max_body_size    0;
+     ssl                     on;
+diff -Naurw zimbra-old/nginx.conf.web.http.template zimbra-new/nginx.conf.web.http.template
+--- zimbra-old/nginx.conf.web.http.template	2017-02-05 21:23:56.000000000 +0700
++++ zimbra-new/nginx.conf.web.http.template	2017-02-05 23:44:31.000000000 +0700
+@@ -4,9 +4,10 @@
+ server
+ {
+     server_name         ${vhn};
+-    ${core.ipboth.enabled}listen            ${vip}${web.http.port} ipv6only=off;
+-    ${core.ipv4only.enabled}listen            ${vip}${web.http.port};
+-    ${core.ipv6only.enabled}listen            ${vip}${web.http.port};
++    ${core.ipboth.enabled}listen            ${web.http.port};
++    ${core.ipboth.enabled}listen            [::]:${web.http.port};
++    ${core.ipv4only.enabled}listen            ${web.http.port};
++    ${core.ipv6only.enabled}listen            [::]:${web.http.port};
+     client_max_body_size 0;
+     include                 ${core.includes}/${core.cprefix}.web.http.mode-${web.mailmode};
+ 
