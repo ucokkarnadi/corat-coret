@@ -7,6 +7,9 @@
 #
 #\$INCLUDE \"/etc/bind/trust.zone\"" > /etc/bind/trust.block
 
+if curl -s --head  --request GET http://trustpositif.kominfo.go.id/ | grep "200 OK" > /dev/null;
+then
+
 SOAF="/etc/bind/trust.block"
 ZONEF="/etc/bind/trust.zone"
 curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fporn%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}$\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
@@ -35,3 +38,4 @@ echo -e "*.$i\tIN\tA\t103.80.80.246" >> $ZONEF;
 done
 rndc reload
 rndc zonestatus trust.block
+fi
