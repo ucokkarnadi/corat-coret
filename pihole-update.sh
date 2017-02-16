@@ -23,7 +23,7 @@ curl https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt >> /tmp/pi
 curl https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt >> /tmp/pi-hole.txt
 curl https://hosts-file.net/ad_servers.txt | grep ^127.0.0.1 | awk '{print $2}' >> /tmp/pi-hole.txt
 sed -i '/#/d' /tmp/pi-hole.txt
-dos2unix /tmp/domain.txt;
+dos2unix /tmp/pi-hole.txt;
 
 ###  Check jumlah domain harus lebih besar dari 600 ribu
 if [ $(cat /tmp/pi-hole.txt | wc -l) > 100000 ]; then # 
@@ -38,7 +38,7 @@ sed -i "s/[0-9]\{10\}/${serial}/g" $SOAF
 
 ###### Untuk membuat file zone yg berisi ZONE tanpa SOA
 echo > $ZONEF
-for i in $(cat /tmp/domain.txt); 
+for i in $(cat /tmp/pi-hole.txt); 
 do
 echo -e "$i\tIN\tA\t127.0.0.1" >> $ZONEF;
 done
