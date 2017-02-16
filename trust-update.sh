@@ -1,11 +1,13 @@
 #!/bin/bash
 
 ###### Untuk membuat file zone yg berisi SOA
-#echo "\$TTL 3600
-#@   IN   SOA   trustpositif.kominfo.go.id. aduankonten.mail.kominfo.go.id. ( `date +"%Y%m%d00"` 10800 10800 10800 10800 )
-#@   IN   NS   localhost.
-#
-#\$INCLUDE \"/etc/bind/trust.zone\"" > /etc/bind/trust.block
+if [ ! -f /etc/bind/hole.block ]; then
+echo "\$TTL 3600
+@   IN   SOA   trustpositif.kominfo.go.id. aduankonten.mail.kominfo.go.id. ( `date +"%Y%m%d00"` 10800 10800 10800 10800 )
+@   IN   NS   localhost.
+
+\$INCLUDE \"/etc/bind/trust.zone\"" > /etc/bind/trust.block
+fi
 
 SOAF="/etc/bind/trust.block"
 ZONEF="/etc/bind/trust.zone"
