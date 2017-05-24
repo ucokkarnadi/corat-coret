@@ -20,8 +20,8 @@ if curl -s --head  --request GET http://trustpositif.kominfo.go.id/ | grep "200 
 then
 # dalam daftar trustpositif sudah tidak ada lagi daftar porn, dijadikan 1 dengan pengaduan
 # curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fporn%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}$\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
-curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fkajian%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}$\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
-curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fpengaduan%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}$\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' >> /tmp/domain.txt; 
+curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fkajian%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
+curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fpengaduan%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' >> /tmp/domain.txt; 
 dos2unix /tmp/domain.txt;
 
 ###  Check jumlah domain harus lebih besar dari 600 ribu
