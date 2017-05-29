@@ -25,7 +25,7 @@ curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=data
 dos2unix /tmp/domain.txt;
 
 ###  Check jumlah domain harus lebih besar dari 600 ribu
-if [ $(cat /tmp/domain.txt | wc -l) > 600000 ]; then # 
+if [ $(cat /tmp/domain.txt | wc -l) -gt 600000 ]; then # 
 if [ "$DATE" -eq "$prefix" ]; then # same day
     num=${curr: -2} # last two digits from serial number
     num=$((10#$num + 1)) # force decimal representation, increment
