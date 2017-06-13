@@ -1,0 +1,30 @@
+# Script schedule mikrotik to prevent l2tp brute force 
+# before create schedule, first create logging action and logging rule
+
+# /system logging action
+# add name=l2tp target=memory
+# /system logging
+# add action=l2tp topics=l2tp,error
+
+{
+:global lastTime;
+:global currentBuf [ :toarray [ /log find buffer=l2tp  ] ] ;
+:global currentLineCount [ :len $currentBuf ] ;
+:global currentTime [ :totime [/log get [ :pick $currentBuf ($currentLineCount -1) ] time   ] ];
+
+:global message "";
+
+:if ( $lastTime = "" ) do={ 
+	:set lastTime $currentTime ; 
+	:set message [/log get [ :pick $currentBuf ($currentLineCount-1) ] message];
+
+} else={
+	:if ( $lastTime < $currentTime ) do={ 
+		:set lastTime $currentTime ; 
+		:set message [/log get [ :pick $currentBuf ($currentLineCount-1) ] message];
+	}
+}
+
+:local IP [:pick $message 1 [find $message ">"]]
+:if ( [:len [/ip fire address-list find address=$IP list=l2tp-5]] > 0) do={ :put "block"; /ip fire address-list add address=$IP list=block; } else={ :if ( [:len [/ip fire address-list find address=$IP list=l2tp-4]] > 0) do={ :put "add to l2tp-5"; /ip fi add add address=$IP list=l2tp-5 timeout=1d} else={ :if ( [:len [/ip fire address-list find address=$IP list=l2tp-3]] > 0) do={ :put "l2tp-4"; /ip fi add add address=$IP list=l2tp-4 timeout=1d} else={ :if ( [:len [/ip fire address-list find address=$IP list=l2tp-2]] > 0) do={ :put "l2tp-3"; /ip fi add add address=$IP list=l2tp-3 timeout=1d} else={ :if ( [:len [/ip fire address-list find address=$IP list=l2tp-1]] > 0) do={ :put "l2tp-2"; /ip fi add add address=$IP list=l2tp-2 timeout=1d} else={ :put "l2tp-1"; /ip fi add add address=$IP list=l2tp-1 timeout=1d} }}}}
+}
