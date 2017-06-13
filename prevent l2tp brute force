@@ -1,6 +1,8 @@
 # Script schedule mikrotik to prevent l2tp brute force 
 # before create schedule, first create logging action and logging rule
 
+# /ip firewall filter
+# add action=drop chain=input src-address-list=block
 # /system logging action
 # add name=l2tp target=memory
 # /system logging
