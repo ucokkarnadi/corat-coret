@@ -6,6 +6,8 @@
 # /system logging
 # add action=l2tp topics=l2tp,error
 
+# after creating action and rule, create schedule with interval 5s
+
 {
 :global lastTime;
 :global currentBuf [ :toarray [ /log find buffer=l2tp  ] ] ;
