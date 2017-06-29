@@ -7,10 +7,10 @@ dos2unix /tmp/domain.txt;
 cat /tmp/domain.txt | sort | uniq > /tmp/domain.txt.tmp
 rm -rf /tmp/domain.txt
 mv /tmp/domain.txt.tmp /tmp/domain.txt
-echo > /etc/dnsmasq.d/03-pihole-wildcard.conf;
+echo > /etc/dnsmasq.d/trustpositif.conf;
 IP=$(ifconfig | perl -nle 's/dr:(\S+)/print $1/e' | grep -v 127.0.0.1);
 for i in $(cat /tmp/domain.txt);
 do
-echo -e "address=/$i/$IP" >> /etc/dnsmasq.d/03-pihole-wildcard.conf;
+echo -e "address=/$i/$IP" >> /etc/dnsmasq.d/trustpositif.conf;
 done
 service dnsmasq restart
