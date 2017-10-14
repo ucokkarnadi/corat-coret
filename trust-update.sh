@@ -16,12 +16,13 @@ curr=$(sed -n '/^@/,/^[^;]*)/H;${;x;s/.*@[^(]*([^0-9]*//;s/[^0-9].*//;p;}' $SOAF
 prefix=${curr::-2}
 
 ####  Check situs trust positif hidup nggak
-if curl -s --head  --request GET http://trustpositif.kominfo.go.id/ | grep "200 OK" > /dev/null; 
+if curl -s --head  --request GET http://trustpositif.layanan.go.id/ | grep "200 OK" > /dev/null; 
 then
+curl -q -s "http://trustpositif.layanan.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fpengaduan%2F&download=domains" | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
 # dalam daftar trustpositif sudah tidak ada lagi daftar porn, dijadikan 1 dengan pengaduan
 # curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fporn%2F&download=domains" | sed 's/\*.//g' | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}$\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
-curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fkajian%2F&download=domains" | sed 's/\*.//g' | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
-curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fpengaduan%2F&download=domains" | sed 's/\*.//g' | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' >> /tmp/domain.txt; 
+#curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fkajian%2F&download=domains" | sed 's/\*.//g' | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' > /tmp/domain.txt; 
+#curl -q -s "http://trustpositif.kominfo.go.id/files/downloads/index.php?dir=database%2Fblacklist%2Fpengaduan%2F&download=domains" | sed 's/\*.//g' | tr '[:upper:]' '[:lower:]' | sed '/\(\/\|:\|=\|\.\.\|\.$\|[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}.[0-9]\{1,3\}\($\|\s\)\|^$\|\*\)/d' | perl -nle 'print if m{^[[:ascii:]]+$}' >> /tmp/domain.txt; 
 dos2unix /tmp/domain.txt;
 cat /tmp/domain.txt | sort | uniq > /tmp/domain.txt.tmp
 rm -rf /tmp/domain.txt
