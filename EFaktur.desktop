@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Comment=Script untuk menjalankan EFaktur
+Exec=sh -c 'cd /home/USERKU/Desktop/EFaktur_Lin64/; ./ETaxInvoice'
+Icon=/home/USERKU/Desktop/EFaktur_Lin64/efaktur.png
+Terminal=false
+Type=Application
+Name=efaktur
