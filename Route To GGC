@@ -1,0 +1,50 @@
+berikut ini adalah rule mikrotik untuk mengalihakn traffic youtube ke GGC lokal milik ISP atau NAP tertentu yg
+
+Syarat dan ketentuan : xxx.xxx.xxx.xxx adalah gateway untuk melewatkan youtube dan memang bisa mengakses yyy.yyy.yyy.0/24 yaitu GGC lokalnya
+
+/ip route
+add check-gateway=ping distance=1 gateway=xxx.xxx.xxx.xxx routing-mark=My-ISP
+
+/ip route rule
+add comment=m.youtube.com dst-address=74.125.24.100/32 table=My-ISP
+add comment=m.youtube.com dst-address=74.125.24.138/32 table=My-ISP
+add comment=m.youtube.com dst-address=74.125.24.101/32 table=My-ISP
+add comment=m.youtube.com dst-address=74.125.24.139/32 table=My-ISP
+add comment=m.youtube.com dst-address=74.125.24.102/32 table=My-ISP
+add comment=m.youtube.com dst-address=74.125.24.113/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.24.91/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.68.190/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.68.93/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.68.91/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.27.14/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.130.93/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.200.93/32 table=My-ISP
+add comment=www.youtube.com dst-address=216.58.203.238/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.24.93/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.24.78/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.24.136/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.24.110/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.200.190/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.24.190/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.160.14/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.200.136/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.68.136/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.130.91/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.27.46/32 table=My-ISP
+add comment=www.youtube.com dst-address=216.58.221.78/32 table=My-ISP
+add comment=www.youtube.com dst-address=74.125.200.91/32 table=My-ISP
+add comment=www.youtube.com dst-address=172.217.27.110/32 table=My-ISP
+add comment=www.youtube.com dst-address=216.239.38.119/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.113/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.100/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.101/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.138/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.139/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.68.102/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.24.102/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.24.139/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.24.138/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.24.113/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.24.100/32 table=My-ISP
+add comment=redirector.c.youtube.com dst-address=74.125.200.138/32 table=My-ISP
+add comment=GGC dst-address=yyy.yyy.yyy.0/24 table=My-ISP
