@@ -7,6 +7,16 @@ https://github.com/ucokkarnadi/corat-coret/blob/master/Route%20To%20GGC
 /ip route
 add check-gateway=ping distance=1 gateway=xxx.xxx.xxx.xxx routing-mark=My-ISP
 
+# Untuk route rule youtube ada 2 pilihan.
+
+/ip route rule
+add comment=YT table=My-ISP dst-address=74.125.0.0/16
+add comment=YT table=My-ISP dst-address=172.217.0.0/16
+add comment=YT table=My-ISP dst-address=216.58.192.0/19
+add comment=YT table=My-ISP dst-address=216.239.32.0/19
+add comment=GGC dst-address=yyy.yyy.yyy.0/24 table=My-ISP
+
+
 /ip route rule
 add comment=m.youtube.com dst-address=74.125.24.100/32 table=My-ISP
 add comment=m.youtube.com dst-address=74.125.24.138/32 table=My-ISP
