@@ -22,7 +22,7 @@ R8srzJmwN0jP41ZL9c8PDHIyh8bwRLtTcm1D9SZImlJnt1ir/md2cXjbDaJWFBM5
 JDGFoqgCWjBH4d1QB7wCCZAA62RjYJsWvIjJEubSfZGL+T0yjWW06XyxV3bqxbYo
 Ob8VZRzI9neWagqNdwvYkQsEjgfbKbYK7p2CNTUQ
 -----END CERTIFICATE-----
-" >> /etc/letsencrypt/live/(MAIL.DOMAIN-1.TLD)/chain.pem
-cp /etc/letsencrypt/live/(MAIL.DOMAIN-1.TLD)/* /opt/zimbra/ssl/letsencrypt/
-chown zimbra:zimbra /opt/zimbra/ssl/letsencrypt/*
+" >> /etc/letsencrypt/live/$(/opt/zimbra/bin/zmhostname)/chain.pem
+cp /etc/letsencrypt/live/$(/opt/zimbra/bin/zmhostname)/* /opt/zimbra/ssl/letsencrypt/
+chown zimbra:zimbra /opt/zimbra/ssl/zimbra/commercial; chmod -R 777 /opt/zimbra/ssl/zimbra/commercial
 su - zimbra -c "cd /opt/zimbra/ssl/letsencrypt/; cp /opt/zimbra/ssl/letsencrypt/privkey.pem /opt/zimbra/ssl/zimbra/commercial/commercial.key; /opt/zimbra/bin/zmcertmgr verifycrt comm privkey.pem cert.pem chain.pem; /opt/zimbra/bin/zmcertmgr deploycrt comm cert.pem chain.pem; zmcontrol start"
