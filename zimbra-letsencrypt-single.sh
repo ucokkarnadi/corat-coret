@@ -22,7 +22,7 @@ R8srzJmwN0jP41ZL9c8PDHIyh8bwRLtTcm1D9SZImlJnt1ir/md2cXjbDaJWFBM5
 JDGFoqgCWjBH4d1QB7wCCZAA62RjYJsWvIjJEubSfZGL+T0yjWW06XyxV3bqxbYo
 Ob8VZRzI9neWagqNdwvYkQsEjgfbKbYK7p2CNTUQ
 -----END CERTIFICATE-----
-" >> /etc/letsencrypt/live/mail.jsn.net.id/chain.pem
+" >> /etc/letsencrypt/live/$(/opt/zimbra/bin/zmhostname)/chain.pem
 cp -R /opt/zimbra/ssl/letsencrypt zimbra.$(date "+%Y.%m.%d-%H.%M")
 cp /etc/letsencrypt/live/$(/opt/zimbra/bin/zmhostname)/* /opt/zimbra/ssl/letsencrypt/
 chown zimbra:zimbra /opt/zimbra/ssl/zimbra/commercial; chmod -R 777 /opt/zimbra/ssl/zimbra/commercial
