@@ -4,6 +4,10 @@ Syarat dan ketentuan : xxx.xxx.xxx.xxx adalah gateway untuk melewatkan youtube
 dan memang bisa mengakses yyy.yyy.yyy.0/24 yaitu GGC lokalnya
 untuk yyy.yyy.yyy.0/24 gunakan dari daftar dibawah ini dan sesuaikan dengan ISPnya ( resiko ditanggung penumpang. )
 
+
+
+
+
 SDI 43.240.231.0/24
 MORATEL 45.121.219.0/24
 PGAS 103.243.51.0/24
@@ -14,9 +18,15 @@ FASTNET 111.95.240.0/24
 XL 112.215.88.0/24
 XL 112.215.183.0/24
 INDOSAT 114.4.4.0/24
+INDOSAT 114.4.7.0/24
 INDOSAT 114.4.160.0/24
+TELKOMSEL 114.120.225.0/24
+TELKOMSEL 114.125.1.0/24
+TELKOMSEL 114.125.33.0/24
 TELKOMSEL 114.125.65.0/24
 TELKOMSEL 114.125.97.0/24
+TELKOMSEL 114.125.161.0/24
+TELKOMSEL 114.125.192.0/24
 TELKOM 118.98.30.0/24
 TELKOM 118.98.36.0/24
 TELKOM 118.98.76.0/23
@@ -24,8 +34,13 @@ TELKOM 118.98.106.0/24
 TELKOM 118.98.109.0/24
 TELKOM 118.98.110.0/23
 BIZNET 117.102.117.0/24
+BIZNET 182.253.80.0/24
 BIZNET 182.253.220.0/24
 MNC 110.50.80.0/24
+Hutchison 116.206.29.0/24
+Hutchison 202.67.46.0/24
+NTT 119.11.250.0/24
+WIN 202.70.50.0/24
 
 
 /ip route
