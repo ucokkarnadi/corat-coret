@@ -1,6 +1,29 @@
 berikut ini adalah rule mikrotik untuk mengalihakn traffic youtube ke GGC lokal milik ISP atau NAP tertentu yg
 
 Syarat dan ketentuan : xxx.xxx.xxx.xxx adalah gateway untuk melewatkan youtube dan memang bisa mengakses yyy.yyy.yyy.0/24 yaitu GGC lokalnya
+untuk yyy.yyy.yyy.0/24 gunakan dari daftar dibawah ini dan sesuaikan dengan ISPnya
+SDI 43.240.231.0/24
+MORATEL 45.121.219.0/24
+CDC 203.207.55.0/24
+My-Republik 66.96.226.0/24
+FASTNET 111.94.248.0/24
+FASTNET 111.95.240.0/24
+XL 112.215.88.0/24
+XL 112.215.183.0/24
+INDOSAT 114.4.4.0/24
+INDOSAT 114.4.160.0/24
+TELKOMSEL 114.125.65.0/24
+TELKOMSEL 114.125.97.0/24
+TELKOM 118.98.30.0/24
+TELKOM 118.98.36.0/24
+TELKOM 118.98.76.0/23
+TELKOM 118.98.106.0/24
+TELKOM 118.98.109.0/24
+TELKOM 118.98.110.0/23
+BIZNET 117.102.117.0/24
+BIZNET 182.253.220.0/24
+MNC 110.50.80.0/24
+
 mbuh apalah, sing mau nyinyir silahkan nyinyir, yg mau pake pesanku hati hati karena banyak yg sok suci padahal mereka juga pencuri. apalagi yg punya duit besar. resiko ditanggung penumpang. metro-e larang bro.
 https://github.com/ucokkarnadi/corat-coret/blob/master/Route%20To%20GGC
 
