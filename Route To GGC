@@ -1,6 +1,9 @@
-berikut ini adalah rule mikrotik untuk mengalihakn traffic youtube ke GGC lokal milik ISP atau NAP tertentu yg
+berikut ini adalah rule mikrotik untuk mengalihakn traffic youtube ke GGC lokal milik ISP atau NAP
+rule dibawah ini tidak berlaku jika hanya memiliki koneksi 1 ISP
+tidak berlaku jika sama sama mahal 
 
-Syarat dan ketentuan : xxx.xxx.xxx.xxx adalah gateway untuk melewatkan youtube 
+Syarat dan ketentuan : xxx.xxx.xxx.xxx adalah gateway untuk melewatkan youtube
+( misal menggunakan modem dan dial di modem maka xxx adalah ip dari modem )
 dan memang bisa mengakses yyy.yyy.yyy.0/24 yaitu GGC lokalnya
 untuk yyy.yyy.yyy.0/24 gunakan dari daftar dibawah ini dan sesuaikan dengan ISPnya ( resiko ditanggung penumpang. )
 
