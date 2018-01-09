@@ -46,6 +46,7 @@ WIN 202.70.50.0/24
 add check-gateway=ping distance=1 gateway=xxx.xxx.xxx.xxx routing-mark=My-ISP
 
 # Untuk route rule youtube ada 2 pilihan.
+### https://bgp.he.net/AS15169#_prefixes
 
 /ip route rule
 add comment=YT table=My-ISP dst-address=74.125.0.0/16
