@@ -1,3 +1,11 @@
+## Jika IP Lokal anda bukan berada di address list LOCAL dibawah ini maka masukkan segmen IP Lokal anda ke address list tersebut
+
+/ip fi add add list=LOCAL address=127.0.0.0/8
+/ip fi add add list=LOCAL address=192.168.0.0/16
+/ip fi add add list=LOCAL address=172.16.0.0/12
+/ip fi add add list=LOCAL address=10.0.0.0/8
+/ip fi fi add chain=input src-address-list=!LOCAL protocol=udp dst-port=53 action=drop
+/ip fi na add chain=dstnat src-address-list=LOCAL protocol=udp dst-port=53 action=redirect to-ports=53
 /ip ro add gateway=172.31.255.254 routing-mark=DNS4Free
 /ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.243 comment=DNS4Free
 /ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.244 comment=DNS4Free
@@ -7,3 +15,4 @@
 /ip rou rule add action=lookup table=DNS4Free dst-address=208.67.222.222 comment=DNS4Free
 /int pptp-client add name=DNS4Free connect-to=103.80.80.112 user=DNS4Free password=!QAZ2wsx#EDC4rfv add-default-route=no disabled=no
 /ip fi na add chain=srcnat action=masquerade out-interface=DNS4Free
+/ip dns set servers=103.80.80.248,103.80.80.249 allow-remote-requests=yes
