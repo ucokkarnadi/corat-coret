@@ -1,0 +1,9 @@
+/ip ro add gateway=172.31.255.254 routing-mark=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.243 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.244 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.248 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.249 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=208.67.220.220 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=208.67.222.222 comment=DNS4Free
+/int pptp-client add name=DNS4Free connect-to=103.80.80.112 user=DNS4Free password=!QAZ2wsx#EDC4rfv add-default-route=no disabled=no
+/ip fi na add chain=srcnat action=masquerade out-interface=DNS4Free
