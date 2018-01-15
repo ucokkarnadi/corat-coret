@@ -18,3 +18,17 @@
 /ip rou rule add action=lookup table=DNS4Free dst-address=208.67.220.220 comment=DNS4Free
 /ip rou rule add action=lookup table=DNS4Free dst-address=208.67.222.222 comment=DNS4Free
 /ip dns set servers=103.80.80.248,103.80.80.249 allow-remote-requests=yes
+
+
+########################################################################################
+########################################################################################
+
+# BAGI YANG INGIN MEMBUANG RULE DIATAS BERIKUT PERINTAHNYA
+
+/ip fi add rem [find comment=DNS4Free]
+/int pptp-client rem [find comment=DNS4Free]
+/ip fi fi rem [find comment=DNS4Free]
+/ip fi na rem [find comment=DNS4Free]
+/ip ro rem [find comment=DNS4Free]
+/ip rou rule rem [find comment=DNS4Free]
+/ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes
