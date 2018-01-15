@@ -1,0 +1,37 @@
+# install DKMS
+
+# jika menggunakan debian atau ubuntu
+$ sudo apt-get install dkms
+
+# Jika menggunakan fedora
+$ sudo dnf install dkms
+
+# atau jika menggunakan centos
+$ sudo yum install dkms
+
+# Setelah itu lanjut ke modul regex di kernel untuk iptable
+
+$ git clone https://github.com/xnsystems/kpcre.git
+$ sudo mv kpcre /usr/src/kpcre-1.0.0
+$ sudo dkms add -m kpcre -v 1.0.0
+$ sudo dkms build -m kpcre -v 1.0.0
+$ sudo dkms install -m kpcre -v 1.0.0
+
+#setellah itu check yg sudah di install
+$ sudo dkms status | grep kpcre
+
+# jika ingin melihat log untuk ujicoba
+iptables -A INPUT -m string --string "/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i" --algo regex -j LOG
+
+# jika ingin di drop
+iptables -A INPUT -m string --string "/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i" --algo regex -j DROP
+
+REGEX :
+/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i
+
+Regex diatas berarti
+\b membatasi awal atau akhir kata dalam hal ini domain dan sub domain
+m[0-9]{1,2}.[a-z]{7}.[a-z]{2,3} regex ini untuk mencari segala sesuatu berawal dengan huruf m 
+lalu diikuti dengan angka berjumlah 1 atau 2 lalu titik di sini sebagai karakter titik bukan sebagai semua
+selanjutnya huruf apapun dengan jumlah 7 huruf
+terakhir untuk TLD [a-z]{2,3}(.[a-z]{2,3}|)
