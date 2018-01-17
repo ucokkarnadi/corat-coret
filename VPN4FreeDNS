@@ -1,4 +1,4 @@
-## Jika IP Lokal anda bukan berada di address list LOCAL dibawah ini maka masukkan segmen IP Lokal anda ke address list tersebut
+## Tinggal COPAS saja ke New Terminal Mikrotik, sedangkan script dibagian bawah setelah pagar untuk menghapusnya
 
 /ip fi add add list=LOCAL address=127.0.0.0/8 comment=DNS4Free
 /ip fi add add list=LOCAL address=192.168.0.0/16 comment=DNS4Free
