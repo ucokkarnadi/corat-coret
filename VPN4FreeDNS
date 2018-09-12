@@ -17,6 +17,8 @@
 /ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.249 comment=DNS4Free
 /ip rou rule add action=lookup table=DNS4Free dst-address=208.67.220.220 comment=DNS4Free
 /ip rou rule add action=lookup table=DNS4Free dst-address=208.67.222.222 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=8.8.8.8 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=8.8.4.4 comment=DNS4Free
 /ip dns set servers=103.80.80.243,103.80.80.244 allow-remote-requests=yes
 
 
