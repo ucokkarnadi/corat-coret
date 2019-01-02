@@ -1,5 +1,12 @@
 ## Tinggal COPAS saja ke New Terminal Mikrotik, sedangkan script dibagian bawah setelah pagar untuk menghapusnya
 
+/ip fi add rem [find comment=DNS4Free]
+/int pptp-client rem [find comment=DNS4Free]
+/ip fi fi rem [find comment=DNS4Free]
+/ip fi na rem [find comment=DNS4Free]
+/ip ro rem [find comment=DNS4Free]
+/ip rou rule rem [find comment=DNS4Free]
+/ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes
 /ip fi add add list=LOCAL address=127.0.0.0/8 comment=DNS4Free
 /ip fi add add list=LOCAL address=192.168.0.0/16 comment=DNS4Free
 /ip fi add add list=LOCAL address=172.16.0.0/12 comment=DNS4Free
