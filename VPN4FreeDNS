@@ -32,7 +32,7 @@ add down-script=":if ([/ping 172.31.255.254 count=5] = 0) do={\r\
     \n/ip dns set servers=8.8.8.8,8.8.4.4\r\
     \n\r\
     \n}\r\
-    \n" host=10.254.254.1 interval=5s timeout=200ms up-script=\
+    \n" host=172.31.255.254 interval=5s timeout=200ms up-script=\
     "/ip dns set servers=103.80.80.248,103.80.80.249\r\
     \n"
 
