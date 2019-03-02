@@ -1,157 +1,158 @@
-41.95.255.0/24
-43.240.231.0/24
-45.121.219.0/24
-49.44.81.0/24
-64.15.122.0/24
-66.96.224.0/24
-66.96.226.0/24
-74.125.0.0/23
-74.125.3.0/24
-74.125.4.0/24
-74.125.7.0/24
-74.125.8.0/24
-74.125.10.0/23
-74.125.12.0/23
-74.125.24.0/24
-74.125.68.0/24
-74.125.96.0/23
-74.125.100.0/22
-74.125.104.0/23
-74.125.106.0/24
-74.125.110.0/23
-74.125.153.0/24
-74.125.154.0/23
-74.125.157.0/24
-74.125.158.0/23
-74.125.163.0/24
-74.125.164.0/24
-74.125.166.0/24
-74.125.168.0/24
-74.125.170.0/23
-74.125.172.0/23
-74.125.174.0/24
-77.67.49.0/24
-80.97.208.0/24
-87.245.192.0/24
-87.245.195.0/24
-87.245.196.0/23
-87.245.216.0/24
-87.245.221.0/24
-87.245.222.0/24
-91.204.136.0/24
-95.181.16.0/24
-103.28.94.0/24
-103.215.25.0/24
-103.229.45.0/24
-103.234.122.0/24
-103.243.51.0/24
-104.237.160.0/24
-104.237.174.0/24
-104.237.188.0/23
-110.50.80.0/23
-111.92.162.0/24
-111.94.248.0/24
-111.95.240.0/24
-112.215.88.0/24
-112.215.101.0/24
-112.215.126.0/24
-112.215.183.0/24
-112.215.184.0/24
-112.215.207.0/24
-112.215.212.0/24
-112.215.222.0/24
-112.215.232.0/24
-114.4.4.0/24
-114.4.7.0/24
-114.4.160.0/24
-114.120.192.0/24
-114.120.225.0/24
-114.121.194.0/24
-114.121.226.0/24
-114.124.160.0/24
-114.124.224.0/24
-114.125.1.0/24
-114.125.2.0/24
-114.125.33.0/24
-114.125.65.0/24
-114.125.97.0/24
-114.125.161.0/24
-114.125.192.0/24
-114.125.240.0/24
-114.142.168.0/24
-116.206.8.0/24
-116.206.29.0/24
-117.102.117.0/24
-118.98.30.0/24
-118.98.36.0/24
-118.98.76.0/23
-118.98.97.0/24
-118.98.99.0/24
-118.98.106.0/24
-118.98.109.0/24
-118.98.110.0/23
-118.175.45.0/24
-119.11.250.0/24
-172.217.128.0/22
-172.217.132.0/23
-172.217.135.0/24
-172.217.194.0/24
-173.194.4.0/23
-173.194.7.0/24
-173.194.12.0/24
-173.194.14.0/24
-173.194.17.0/24
-173.194.19.0/24
-173.194.22.0/24
-173.194.24.0/24
-173.194.28.0/22
-173.194.49.0/24
-173.194.51.0/24
-173.194.52.0/22
-173.194.59.0/24
-173.194.60.0/23
-173.194.128.0/23
-173.194.131.0/24
-173.194.135.0/24
-173.194.137.0/24
-173.194.138.0/23
-173.194.141.0/24
-173.194.142.0/23
-173.194.144.0/24
-173.194.147.0/24
-173.194.150.0/23
-173.194.152.0/24
-173.194.154.0/24
-173.194.160.0/24
-173.194.162.0/23
-173.194.164.0/22
-173.194.176.0/24
-173.194.178.0/23
-173.194.182.0/23
-173.194.184.0/22
-173.194.188.0/24
-173.194.190.0/23
-180.214.232.0/24
-182.253.60.0/24
-182.253.80.0/24
-182.253.220.0/24
-185.158.208.0/24
-185.158.210.0/24
-185.192.249.0/24
-188.43.61.0/24
-188.68.163.0/24
-202.67.46.0/24
-202.70.50.0/24
-202.158.57.0/24
-203.113.51.0/24
-203.207.55.0/24
-208.65.152.0/24
-208.117.253.0/24
-209.85.164.0/23
-209.85.225.0/24
-209.85.226.0/24
-209.85.229.0/24
-209.85.230.0/23
-216.239.38.0/24
-220.233.196.0/24
+/ip fi add
+add address=41.95.255.0/24 list=GGC
+add address=43.240.231.0/24 list=GGC
+add address=45.121.219.0/24 list=GGC
+add address=49.44.81.0/24 list=GGC
+add address=64.15.122.0/24 list=GGC
+add address=66.96.224.0/24 list=GGC
+add address=66.96.226.0/24 list=GGC
+add address=74.125.0.0/23 list=GGC
+add address=74.125.3.0/24 list=GGC
+add address=74.125.4.0/24 list=GGC
+add address=74.125.7.0/24 list=GGC
+add address=74.125.8.0/24 list=GGC
+add address=74.125.10.0/23 list=GGC
+add address=74.125.12.0/23 list=GGC
+add address=74.125.24.0/24 list=GGC
+add address=74.125.68.0/24 list=GGC
+add address=74.125.96.0/23 list=GGC
+add address=74.125.100.0/22 list=GGC
+add address=74.125.104.0/23 list=GGC
+add address=74.125.106.0/24 list=GGC
+add address=74.125.110.0/23 list=GGC
+add address=74.125.153.0/24 list=GGC
+add address=74.125.154.0/23 list=GGC
+add address=74.125.157.0/24 list=GGC
+add address=74.125.158.0/23 list=GGC
+add address=74.125.163.0/24 list=GGC
+add address=74.125.164.0/24 list=GGC
+add address=74.125.166.0/24 list=GGC
+add address=74.125.168.0/24 list=GGC
+add address=74.125.170.0/23 list=GGC
+add address=74.125.172.0/23 list=GGC
+add address=74.125.174.0/24 list=GGC
+add address=77.67.49.0/24 list=GGC
+add address=80.97.208.0/24 list=GGC
+add address=87.245.192.0/24 list=GGC
+add address=87.245.195.0/24 list=GGC
+add address=87.245.196.0/23 list=GGC
+add address=87.245.216.0/24 list=GGC
+add address=87.245.221.0/24 list=GGC
+add address=87.245.222.0/24 list=GGC
+add address=91.204.136.0/24 list=GGC
+add address=95.181.16.0/24 list=GGC
+add address=103.28.94.0/24 list=GGC
+add address=103.215.25.0/24 list=GGC
+add address=103.229.45.0/24 list=GGC
+add address=103.234.122.0/24 list=GGC
+add address=103.243.51.0/24 list=GGC
+add address=104.237.160.0/24 list=GGC
+add address=104.237.174.0/24 list=GGC
+add address=104.237.188.0/23 list=GGC
+add address=110.50.80.0/23 list=GGC
+add address=111.92.162.0/24 list=GGC
+add address=111.94.248.0/24 list=GGC
+add address=111.95.240.0/24 list=GGC
+add address=112.215.88.0/24 list=GGC
+add address=112.215.101.0/24 list=GGC
+add address=112.215.126.0/24 list=GGC
+add address=112.215.183.0/24 list=GGC
+add address=112.215.184.0/24 list=GGC
+add address=112.215.207.0/24 list=GGC
+add address=112.215.212.0/24 list=GGC
+add address=112.215.222.0/24 list=GGC
+add address=112.215.232.0/24 list=GGC
+add address=114.4.4.0/24 list=GGC
+add address=114.4.7.0/24 list=GGC
+add address=114.4.160.0/24 list=GGC
+add address=114.120.192.0/24 list=GGC
+add address=114.120.225.0/24 list=GGC
+add address=114.121.194.0/24 list=GGC
+add address=114.121.226.0/24 list=GGC
+add address=114.124.160.0/24 list=GGC
+add address=114.124.224.0/24 list=GGC
+add address=114.125.1.0/24 list=GGC
+add address=114.125.2.0/24 list=GGC
+add address=114.125.33.0/24 list=GGC
+add address=114.125.65.0/24 list=GGC
+add address=114.125.97.0/24 list=GGC
+add address=114.125.161.0/24 list=GGC
+add address=114.125.192.0/24 list=GGC
+add address=114.125.240.0/24 list=GGC
+add address=114.142.168.0/24 list=GGC
+add address=116.206.8.0/24 list=GGC
+add address=116.206.29.0/24 list=GGC
+add address=117.102.117.0/24 list=GGC
+add address=118.98.30.0/24 list=GGC
+add address=118.98.36.0/24 list=GGC
+add address=118.98.76.0/23 list=GGC
+add address=118.98.97.0/24 list=GGC
+add address=118.98.99.0/24 list=GGC
+add address=118.98.106.0/24 list=GGC
+add address=118.98.109.0/24 list=GGC
+add address=118.98.110.0/23 list=GGC
+add address=118.175.45.0/24 list=GGC
+add address=119.11.250.0/24 list=GGC
+add address=172.217.128.0/22 list=GGC
+add address=172.217.132.0/23 list=GGC
+add address=172.217.135.0/24 list=GGC
+add address=172.217.194.0/24 list=GGC
+add address=173.194.4.0/23 list=GGC
+add address=173.194.7.0/24 list=GGC
+add address=173.194.12.0/24 list=GGC
+add address=173.194.14.0/24 list=GGC
+add address=173.194.17.0/24 list=GGC
+add address=173.194.19.0/24 list=GGC
+add address=173.194.22.0/24 list=GGC
+add address=173.194.24.0/24 list=GGC
+add address=173.194.28.0/22 list=GGC
+add address=173.194.49.0/24 list=GGC
+add address=173.194.51.0/24 list=GGC
+add address=173.194.52.0/22 list=GGC
+add address=173.194.59.0/24 list=GGC
+add address=173.194.60.0/23 list=GGC
+add address=173.194.128.0/23 list=GGC
+add address=173.194.131.0/24 list=GGC
+add address=173.194.135.0/24 list=GGC
+add address=173.194.137.0/24 list=GGC
+add address=173.194.138.0/23 list=GGC
+add address=173.194.141.0/24 list=GGC
+add address=173.194.142.0/23 list=GGC
+add address=173.194.144.0/24 list=GGC
+add address=173.194.147.0/24 list=GGC
+add address=173.194.150.0/23 list=GGC
+add address=173.194.152.0/24 list=GGC
+add address=173.194.154.0/24 list=GGC
+add address=173.194.160.0/24 list=GGC
+add address=173.194.162.0/23 list=GGC
+add address=173.194.164.0/22 list=GGC
+add address=173.194.176.0/24 list=GGC
+add address=173.194.178.0/23 list=GGC
+add address=173.194.182.0/23 list=GGC
+add address=173.194.184.0/22 list=GGC
+add address=173.194.188.0/24 list=GGC
+add address=173.194.190.0/23 list=GGC
+add address=180.214.232.0/24 list=GGC
+add address=182.253.60.0/24 list=GGC
+add address=182.253.80.0/24 list=GGC
+add address=182.253.220.0/24 list=GGC
+add address=185.158.208.0/24 list=GGC
+add address=185.158.210.0/24 list=GGC
+add address=185.192.249.0/24 list=GGC
+add address=188.43.61.0/24 list=GGC
+add address=188.68.163.0/24 list=GGC
+add address=202.67.46.0/24 list=GGC
+add address=202.70.50.0/24 list=GGC
+add address=202.158.57.0/24 list=GGC
+add address=203.113.51.0/24 list=GGC
+add address=203.207.55.0/24 list=GGC
+add address=208.65.152.0/24 list=GGC
+add address=208.117.253.0/24 list=GGC
+add address=209.85.164.0/23 list=GGC
+add address=209.85.225.0/24 list=GGC
+add address=209.85.226.0/24 list=GGC
+add address=209.85.229.0/24 list=GGC
+add address=209.85.230.0/23 list=GGC
+add address=216.239.38.0/24 list=GGC
+add address=220.233.196.0/24 list=GGC
 
