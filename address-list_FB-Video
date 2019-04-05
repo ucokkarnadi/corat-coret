@@ -1,4 +1,6 @@
 /ip fi add
+add list=FB-Video address=1.1.1.1
+rem [find list=FB-Video]
 add list=FB-Video address=video-amt2-1.xx.fbcdn.net
 add list=FB-Video address=video.fbdo2-1.fna.fbcdn.net
 add list=FB-Video address=video.fcgk10-1.fna.fbcdn.net
