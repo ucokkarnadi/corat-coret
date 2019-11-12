@@ -1,3 +1,8 @@
+perubahan yg semula
+tcont 1 dir both
+ke 
+tcont 3 dir both
+
 Kantor A : 1/1/1:8
 Kantor B : 1/1/2:6
 Kantor C : 1/1/2:10
@@ -14,7 +19,7 @@ exit
 
 interface gpon-onu_1/1/1:8
   tcont 3 name CL367 profile 50M
-  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 name CL367 unicast tcont 3 dir both
   gemport 3 traffic-limit upstream UP50M downstream DW50M
   switchport mode hybrid vport 3
   service-port 3 vport 3 user-vlan 367 vlan 367
@@ -30,7 +35,7 @@ exit
 
 interface gpon-onu_1/1/2:6
   tcont 3 name CL367 profile 50M
-  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 name CL367 unicast tcont 3 dir both
   gemport 3 traffic-limit upstream UP50M downstream DW50M
   switchport mode hybrid vport 3
   service-port 3 vport 3 user-vlan 367 vlan 367
@@ -46,7 +51,7 @@ exit
 
 interface gpon-onu_1/1/2:10
   tcont 3 name CL367 profile 50M
-  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 name CL367 unicast tcont 3 dir both
   gemport 3 traffic-limit upstream UP50M downstream DW50M
   switchport mode hybrid vport 3
   service-port 3 vport 3 user-vlan 367 vlan 367
