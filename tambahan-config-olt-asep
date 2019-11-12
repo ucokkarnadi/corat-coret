@@ -1,0 +1,68 @@
+Kantor A : 1/1/1:8
+Kantor B : 1/1/2:6
+Kantor C : 1/1/2:10
+
+conf t
+vlan 367
+name CL367
+exit
+gpon
+  profile tcont 50M type 4 maximum 51000
+  profile traffic DW50M sir 45000 pir 50000
+  profile traffic UP50M sir 45000 pir 50000
+exit
+
+interface gpon-onu_1/1/1:8
+  tcont 3 name CL367 profile 50M
+  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 traffic-limit upstream UP50M downstream DW50M
+  switchport mode hybrid vport 3
+  service-port 3 vport 3 user-vlan 367 vlan 367
+exit
+pon-onu-mng gpon-onu_1/1/1:8
+  service CL367 type internet gemport 3 vlan 367
+  vlan port eth_0/2 mode tag vlan 367
+  interface wifi wifi_0/3 state unlock
+  vlan port wifi_0/3 mode tag vlan 367
+  ssid auth wpa wifi_0/3 wpa2-psk key 87654321
+  ssid ctrl wifi_0/3 name tes_data
+exit
+
+interface gpon-onu_1/1/2:6
+  tcont 3 name CL367 profile 50M
+  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 traffic-limit upstream UP50M downstream DW50M
+  switchport mode hybrid vport 3
+  service-port 3 vport 3 user-vlan 367 vlan 367
+exit
+pon-onu-mng gpon-onu_1/1/2:6
+  service CL367 type internet gemport 3 vlan 367
+  vlan port eth_0/2 mode tag vlan 367
+  interface wifi wifi_0/3 state unlock
+  vlan port wifi_0/3 mode tag vlan 367
+  ssid auth wpa wifi_0/3 wpa2-psk key 87654321
+  ssid ctrl wifi_0/3 name tes_data
+exit
+
+interface gpon-onu_1/1/2:10
+  tcont 3 name CL367 profile 50M
+  gemport 3 name CL367 unicast tcont 1 dir both
+  gemport 3 traffic-limit upstream UP50M downstream DW50M
+  switchport mode hybrid vport 3
+  service-port 3 vport 3 user-vlan 367 vlan 367
+exit
+pon-onu-mng gpon-onu_1/1/2:10
+  service CL367 type internet gemport 3 vlan 367
+  vlan port eth_0/2 mode tag vlan 367
+  interface wifi wifi_0/3 state unlock
+  vlan port wifi_0/3 mode tag vlan 367
+  ssid auth wpa wifi_0/3 wpa2-psk key 87654321
+  ssid ctrl wifi_0/3 name tes_data
+exit
+
+end
+write
+
+show vlan 367
+
+# hanya ini saja
