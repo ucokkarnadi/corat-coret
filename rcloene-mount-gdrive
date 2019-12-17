@@ -13,5 +13,5 @@ fi
 EOF
 chmod +x /usr/sbin/gdrivemount
 cat /usr/sbin/gdrivemount
-echo "*/10 * * * * /usr/sbin/gdrivemount" | crontab -
+crontab -l | { cat; echo "*/10 * * * * /usr/sbin/gdrivemount"; } | crontab -
 crontab -l
