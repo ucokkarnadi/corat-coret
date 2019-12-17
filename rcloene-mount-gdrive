@@ -1,0 +1,17 @@
+cat <<EOF > /usr/sbin/gdrivemount
+#!/bin/bash
+if [ ! -f /mnt/GDrive/mountcheck ] ;
+then
+rclone mount GDrive:/ /mnt/GDrive --allow-non-empty --daemon
+if [ ! -f /mnt/GDrive/mountcheck ] ;
+then
+logger CRITICAL: /mnt/GDrive not mounted
+else
+logger  INFO: Check successful, /mnt/GDrive mounted.
+fi
+fi
+EOF
+chmod +x /usr/sbin/gdrivemount
+cat /usr/sbin/gdrivemount
+echo "*/10 * * * * /usr/sbin/gdrivemount" | crontab -
+crontab -l
