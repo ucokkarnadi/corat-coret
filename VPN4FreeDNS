@@ -14,7 +14,7 @@
 /ip fi add add address=blackhole.lan list=blackhole comment=DNS4Free
 /ip firewall filter
 add action=drop chain=forward src-address-list=blackhole
-/int pptp-client add name=DNS4Free connect-to=103.80.80.112 user=DNS4Free password=!QAZ2wsx#EDC4rfv max-mtu=1492 max-mru=1492 add-default-route=no disabled=no comment=DNS4Free
+/int pptp-client add name=DNS4Free connect-to=103.80.80.226 user=DNS4Free password=!QAZ2wsx#EDC4rfv max-mtu=1492 max-mru=1492 add-default-route=no disabled=no comment=DNS4Free
 /ip fi fi add action=drop chain=forward src-address-list=blackhole comment=DNS4Free
 /ip fi fi add chain=input src-address-list=!LOCAL protocol=udp dst-port=53 action=drop comment=DNS4Free
 /ip fi fi move [find comment=DNS4Free] 0
