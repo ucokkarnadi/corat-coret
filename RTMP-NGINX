@@ -1,0 +1,74 @@
+Ujicoba Nginx untuk stream ke FB dan YT 
+
+apt-get update
+apt-get upgrade
+apt-get install nginx -y
+apt-get install libnginx-mod-rtmp -y
+nano /etc/nginx/nginx.conf
+service nginx restart
+apt-get install stunnel4 -y
+nano /etc/default/stunnel4
+nano /etc/stunnel/stunnel.conf
+systemctl enable stunnel4.service
+systemctl restart stunnel4.service
+
+
+CONFIG
+
+root@VPS:~# tail -13 /etc/nginx/nginx.conf
+        server {
+                listen 1935;
+                chunk_size 4096;
+
+                application live {
+                        live on;
+                        record off;
+                        push rtmp://127.0.0.1:1936/rtmp/<<Persisten KEY Facebook>>;
+                        push rtmp://a.rtmp.youtube.com/live2/<< Key Youtube >>;
+                        allow publish 127.0.0.1;
+                        allow publish 103.80.80.0/22;
+                        deny publish all;
+
+
+                }
+        }
+}
+root@VPS:~# cat /etc/default/stunnel4
+# /etc/default/stunnel
+# Julien LEMOINE <speedblue@debian.org>
+# September 2003
+
+# Change to one to enable stunnel automatic startup
+ENABLED=1
+FILES="/etc/stunnel/*.conf"
+OPTIONS=""
+
+# Change to one to enable ppp restart scripts
+PPP_RESTART=0
+
+# Change to enable the setting of limits on the stunnel instances
+# For example, to set a large limit on file descriptors (to enable
+# more simultaneous client connections), set RLIMITS="-n 4096"
+# More than one resource limit may be modified at the same time,
+# e.g. RLIMITS="-n 4096 -d unlimited"
+RLIMITS=""
+root@VPS:~# cat /etc/stunnel/stunnel.conf
+pid = /var/run/stunnel4/stunnel.pid
+output = /var/log/stunnel4/stunnel.log
+
+setuid = stunnel4
+setgid = stunnel4
+
+# https://www.stunnel.org/faq.html
+socket = r:TCP_NODELAY=1
+socket = l:TCP_NODELAY=1
+
+debug = 4
+
+[fb-live]
+client = yes
+accept = 1936
+connect = live-api-s.facebook.com:443
+verifyChain = no
+
+root@VPS:~#
