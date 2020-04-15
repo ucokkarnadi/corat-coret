@@ -1,17 +1,13 @@
 cat <<EOF > /usr/sbin/gdrivemount
 #!/bin/bash
-if [ ! -f /mnt/GDrive/mountcheck ] ;
+if [ ! -f "/mnt/GDrive/test.txt" ];
 then
-rclone mount GDrive:/ /mnt/GDrive --allow-non-empty --daemon
-if [ ! -f /mnt/GDrive/mountcheck ] ;
-then
-logger CRITICAL: /mnt/GDrive not mounted
-else
-logger  INFO: Check successful, /mnt/GDrive mounted.
-fi
+for I in \`ps -ef | grep rclone | grep -v grep | awk '{print \$2}'\`; do kill -9 \$I; done
+for i in \`mount | grep GDrive\`; do fusermount -u /mnt/GDrive; done
+rclone mount --config=/root/.config/rclone/rclone.conf --allow-other --cache-tmp-upload-path=/tmp/rclone/upload --cache-chunk-path=/tmp/rclone/chunks --cache-workers=8 --cache-writes --cache-dir=/tmp/rclone/vfs --cache-db-path=/tmp/rclone/db --no-modtime --drive-use-trash --stats=0 --checkers=16 --bwlimit=400M --dir-cache-time=60m --cache-info-age=60m GDrive:/ /mnt/GDrive --allow-non-empty --daemon
 fi
 EOF
 chmod +x /usr/sbin/gdrivemount
 cat /usr/sbin/gdrivemount
-crontab -l | { cat; echo "*/10 * * * * /usr/sbin/gdrivemount"; } | crontab -
+echo "*/5 * * * * /usr/sbin/gdrivemount" | crontab -
 crontab -l
