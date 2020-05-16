@@ -22,18 +22,26 @@ $ sudo dkms install -m kpcre -v 1.0.0
 #setellah itu check yg sudah di install
 $ sudo dkms status | grep kpcre
 
-# jika ingin melihat log untuk ujicoba
-iptables -A INPUT -m string --string "/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i" --algo regex -j LOG
-
 # jika ingin di drop
-iptables -A INPUT -m string --string "/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i" --algo regex -j DROP
-
-REGEX :
-/\bm[0-9]{1,2}.[a-z]{7}.[a-z]{2,3}(.[a-z]{2,3}|)\b/i
-
-Regex diatas berarti
-\b membatasi awal atau akhir kata dalam hal ini domain dan sub domain
-m[0-9]{1,2}.[a-z]{7}.[a-z]{2,3} regex ini untuk mencari segala sesuatu berawal dengan huruf m 
-lalu diikuti dengan angka berjumlah 1 atau 2 lalu titik di sini sebagai karakter titik bukan sebagai semua
-selanjutnya huruf apapun dengan jumlah 7 huruf
-terakhir untuk TLD [a-z]{2,3}(.[a-z]{2,3}|)
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\btemplatehotspot[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\bwww[^ -~]asqpniwvxea[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\bwww[^ -~]kimqbvkaidbwst[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]217[^ -~]172[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\btemplatehotspot[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bwww[^ -~]asqpniwvxea[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bwww[^ -~]kimqbvkaidbwst[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]217[^ -~]172[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+-A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
