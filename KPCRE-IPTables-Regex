@@ -3,37 +3,37 @@
 # install DKMS
 
 # jika menggunakan debian atau ubuntu
-$ sudo apt-get install dkms
+apt-get install dkms
 
 # Jika menggunakan fedora
-$ sudo dnf install dkms
+dnf install dkms
 
 # atau jika menggunakan centos
-$ sudo yum install dkms
+yum install dkms
 
 # Setelah itu lanjut ke modul regex di kernel untuk iptable
 
-$ git clone https://github.com/xnsystems/kpcre.git
-$ sudo mv kpcre /usr/src/kpcre-1.0.0
-$ sudo dkms add -m kpcre -v 1.0.0
-$ sudo dkms build -m kpcre -v 1.0.0
-$ sudo dkms install -m kpcre -v 1.0.0
+git clone https://github.com/xnsystems/kpcre.git
+mv kpcre /usr/src/kpcre-1.0.0
+dkms add -m kpcre -v 1.0.0
+dkms build -m kpcre -v 1.0.0
+dkms install -m kpcre -v 1.0.0
 
 #setellah itu check yg sudah di install
-$ sudo dkms status | grep kpcre
+dkms status | grep kpcre
 
 # jika ingin di drop
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
--A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p udp -m udp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]totolink\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]itotolink[^ -~]net\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]tendawifi[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bpingma[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\bandroid[^ -~]bugly[^ -~]qq[^ -~]com\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]168[^ -~]192[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 53 -m string --string "/\\b.+[^ -~]10[^ -~]in-addr[^ -~]arpa\\b/smi" --algo regex --to 65535 -j DROP
