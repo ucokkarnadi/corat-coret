@@ -7,15 +7,19 @@ filename="${filename%.*}"
 echo '"FK","KD_JENIS_TRANSAKSI","FG_PENGGANTI","NOMOR_FAKTUR","MASA_PAJAK","TAHUN_PAJAK","TANGGAL_FAKTUR","NPWP","NAMA","ALAMAT_LENGKAP","JUMLAH_DPP","JUMLAH_PPN","JUMLAH_PPNBM","ID_KETERANGAN_TAMBAHAN","FG_UANG_MUKA","UANG_MUKA_DPP","UANG_MUKA_PPN","UANG_MUKA_PPNBM","REFERENSI"
 "LT","NPWP","NAMA","JALAN","BLOK","NOMOR","RT","RW","KECAMATAN","KELURAHAN","KABUPATEN","PROPINSI","KODE_POS","NOMOR_TELEPON"
 "OF","KODE_OBJEK","NAMA","HARGA_SATUAN","JUMLAH_BARANG","HARGA_TOTAL","DISKON","DPP","PPN","TARIF_PPNBM","PPNBM"' > $filename.csv
-xlsx2csv -d ';' $FILE | awk 'NR>6 {print}' | awk -F";" '{
-if($3 == "" )
-{
-}
-else
+xlsx2csv -d ';' $FILE | awk '(NR-1)%2{$1=$1}1' RS=\" ORS=\" | awk 'BEGIN{FS=OFS=";"} {gsub(/\-/, "/", $6); gsub(/\.|\-/, "", $7); gsub(/\.|\-/, "", $8); gsub(/\"/, "")} 1' | awk -F";" '{
+if($1 == "01" || $1 == "02" )
 {
 if($7 =="000000000000000" || $7 == "")
 {
+if($8 =="")
+{
+print "\"FK\",\"" $1 "\",\"" $2 "\",\"" $3 "\",\"" $4 "\",\"" $5 "\",\"" $6 "\",\"000000000000000\",\"0000000000000000#NIK#NAMA#" $9 "\",\"" $10 "\",\"" $11 "\",\"" $12 "\",\"0\",\"\",\"0\",\"0\",\"0\",\"0\",\"\"";
+}
+else
+{
 print "\"FK\",\"" $1 "\",\"" $2 "\",\"" $3 "\",\"" $4 "\",\"" $5 "\",\"" $6 "\",\"000000000000000\",\"" $8 "#NIK#NAMA#" $9 "\",\"" $10 "\",\"" $11 "\",\"" $12 "\",\"0\",\"\",\"0\",\"0\",\"0\",\"0\",\"\"";
+}
 }
 else
 {
