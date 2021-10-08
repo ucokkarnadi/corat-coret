@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v xlsx2csv &> /dev/null;
+then
+apt install xlsx2csv -y
+fi
+
 for FILE in $(ls *.xlsx); 
 do
 filename=$(basename -- "$FILE")
