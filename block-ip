@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# exec 1> >(logger -s -t $(basename $0)) 2>&1
+
+{
+IPLIST="$(/sbin/iptables-save | grep '\-A' | awk '{ print $4 }' | sort -u | tr '\n' ' ')"
+grep " connect from unknown" /var/log/zimbra.log  | cut -d '[' -f3 | cut -d ']' -f1 |sort -u > /tmp/IP.txt;
+grep "\nSubject:" /var/log/zimbra.log | cut -d '[' -f3 |cut -d ']' -f1 | sort -u >> /tmp/IP.txt;
+grep rejected /var/log/zimbra.log | cut -d '[' -f3 |cut -d ']' -f1 | sort -u >> /tmp/IP.txt;
+grep -e '\\n' /var/log/zimbra.log | grep PREGREET | awk '{print $11}' | cut -d '[' -f2 |cut -d ']' -f1 | sort -u >> /tmp/IP.txt;
+NETWORKS="10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 103.80.80.0/22 103.153.148.0/23 103.178.14.0/23 2400:4ec0::/32 2406:45c0::/32 127.0.0.1/32 ::1 ";
+# /sbin/iptables -F;
+# /sbin/iptables -X;
+for i in $(cat /tmp/IP.txt | sort -u );
+do
+grepcidr "$NETWORKS" <(echo "$i") >/dev/null || { grepcidr "$IPLIST" <(echo "$i")>/dev/null || {
+/sbin/iptables -A INPUT -m comment --comment "expire=`date -d '+ 1 day' +%s`" -j DROP -s $i; echo "IP $i di blokir";
+}
+} ;
+done;
+/sbin/iptables -L INPUT -n --line-numbers | tac | perl -ne 'next unless /(^\d+).*expire=(\d+)/; $epoc = time(); if ( $2 < $epoc ) {
+print "iptables -D INPUT $1\n"; exec("/sbin/iptables -D INPUT $1");
+}';
+rm -rf /tmp/IP.txt;
+}
