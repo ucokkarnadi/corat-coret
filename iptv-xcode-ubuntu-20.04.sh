@@ -24,16 +24,6 @@ else
   fi
 fi
 #
-wget http://127.0.0.1/downloads/iptv_panel_pro.zip -O /tmp/iptv_panel_pro.zip
-wget http://127.0.0.1/downloads/install_iptv_pro.zip && unzip install_iptv_pro.zip
-#
-php install_iptv_pro.php
-#
-echo " "
-echo "####################################################################################"
-echo " "
-echo "Licenza Installata. Fare yes a ogni domanda !!!"
-echo " "
 echo 1 > /proc/sys/net/ipv4/ip_forward
 #
 /usr/sbin/iptables -t nat -I OUTPUT --dest 149.202.206.51/28 -j DNAT --to-destination 127.0.0.1
@@ -61,6 +51,17 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 #
 apt-get install iptables-persistent
 #
+wget http://127.0.0.1/downloads/iptv_panel_pro.zip -O /tmp/iptv_panel_pro.zip
+wget http://127.0.0.1/downloads/install_iptv_pro.zip && unzip install_iptv_pro.zip
+#
+php install_iptv_pro.php
+#
+echo " "
+echo "####################################################################################"
+echo " "
+echo "Licenza Installata. Fare yes a ogni domanda !!!"
+echo " "
+
 echo " "
 echo "####################################################################################"
 echo " "
