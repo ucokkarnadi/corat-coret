@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 apt install software-properties-common -y
-add-apt-repository ppa:ondrej/php
+add-apt-repository ppa:ondrej/php -y
 
 apt-get update && apt-get upgrade -y
 # apt-get install lsb-release nscd curl php5 php5-mysql php5-cli php5-curl unzip -y && apt-get install php5-mcrypt &&  php5enmod mcrypt
