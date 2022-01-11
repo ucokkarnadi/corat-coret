@@ -4,7 +4,7 @@ apt install software-properties-common -y
 add-apt-repository ppa:ondrej/php -y
 
 apt-get update && apt-get upgrade -y
-# apt-get install lsb-release nscd curl php5 php5-mysql php5-cli php5-curl unzip -y && apt-get install php5-mcrypt &&  php5enmod mcrypt
+# apt-get install lsb-release nscd curl php5 php5-mysql php5-cli php5-curl unzip php5-mcrypt -y &&  php5enmod mcrypt
 apt-get install lsb-release nscd curl php5.6 php5.6-mysql php5.6-cli php5.6-curl unzip php5.6-mcrypt -y &&  phpenmod mcrypt
 service apache2 restart
 wget http://downloads.sourceforge.net/project/iptv-md/xtream/www_dir.tar.gz -O /tmp/www_dir.tar.gz
