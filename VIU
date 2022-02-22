@@ -1,0 +1,24 @@
+agar dapat nonton viu
+
+/ip fi add
+add address=api2.branch.io list=VIU
+add address=apis.viu.com list=VIU
+add address=www.viu.com list=VIU
+add address=viu.com list=VIU
+add address=app.link list=VIU
+add address=cdn.branch.io list=VIU
+add address=consumerdetails.viu.com list=VIU
+add address=d2r1yp2w7bby2u.cloudfront.net list=VIU
+add address=polyfillv3.viu.com list=VIU
+add address=s7.addthis.com list=VIU
+add address=static.viu.com list=VIU
+add address=track.greentropolo.com list=VIU
+add address=um.viuapi.io list=VIU
+add address=wzrkt.com list=VIU
+
+/ip firewall mangle
+add action=mark-connection chain=prerouting dst-address-list=VIU new-connection-mark=viu passthrough=yes
+add action=mark-routing chain=prerouting connection-mark=viu new-routing-mark=ISP-LAIN passthrough=no
+
+/ip route
+add comment=ISP-LAIN distance=11 gateway=www.xxx.yyy.zzz routing-mark=ISP-LAIN
