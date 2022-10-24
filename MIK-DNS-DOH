@@ -1,8 +1,20 @@
+if ([:len [/int list find name=WAN]] = 0 ) do={ /int list add name=WAN; }
+foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
+:local VAR [/ip route get $i gateway-status ]
+:local A [:tostr $VAR]
+:local INT [:pick $A ( [:len [:pick $A 0 [:find $A "via"]]] + 5 ) [:len $A] ]
+
+:if ([:len [/int list member find list=WAN interface="$INT"]] = 0) do={ /int list member add list=WAN interface="$INT" }
+}
+
+/ip fi fi add chain=input protocol=udp dst-port=53 in-interface-list=WAN action=reject comment=DROP-REQ-DNS
+/ip fi fi add chain=input protocol=tcp dst-port=53 in-interface-list=WAN action=reject comment=DROP-REQ-DNS
+/ip fi fi move [find comment=DROP-REQ-DNS
+
 /ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS-REDIRECT
 /ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS-REDIRECT 
 /ip fi na move [find comment=DNS-REDIRECT] 0
-/ip dns
-set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query
+/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query
 /ip dns static
 add address=103.80.80.232 name=dnslb.jsn.net.id
 add address=103.80.80.231 name=dnslb.jsn.net.id
