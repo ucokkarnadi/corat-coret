@@ -1,0 +1,26 @@
+/ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS-REDIRECT
+/ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS-REDIRECT 
+/ip fi na move [find comment=DNS-REDIRECT] 0
+/ip dns
+set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query
+/ip dns static
+add address=103.80.80.232 name=dnslb.jsn.net.id
+add address=103.80.80.231 name=dnslb.jsn.net.id
+
+/system scheduler
+add interval=1m name=Check-DNS-JSN on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
+    \n/ip dns static en [find comment=\"103.80.80.232\"] \r\
+    \n} else={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.232\"]\r\
+    \n}\r\
+    \nif ( [resolve dnslb1.jsn.net.id server=103.80.80.231 server-port=5353 ] = \"103.80.80.231\" ) do={\r\
+    \n/ip dns static en [find comment=\"103.80.80.231\"] \r\
+    \n} else={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.231\"]\r\
+    \n}\r\
+    \nif ( [/ip dns static get [find comment=\"103.80.80.231\"] disabled ] && [/ip dns static get [find comment=\"103.80.80.232\"] disabled ] ) do={\r\
+    \nip dns set servers=8.8.8.8,8.8.4.4 use-doh-server=\"\"\r\
+    \n} else={\r\
+    \n/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query servers=\"\"\r\
+    \n}\r\
+    \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup
