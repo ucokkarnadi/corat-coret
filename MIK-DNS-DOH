@@ -9,7 +9,7 @@ foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
 
 /ip fi fi add chain=input protocol=udp dst-port=53 in-interface-list=WAN action=reject comment=DROP-REQ-DNS
 /ip fi fi add chain=input protocol=tcp dst-port=53 in-interface-list=WAN action=reject comment=DROP-REQ-DNS
-/ip fi fi move [find comment=DROP-REQ-DNS]
+/ip fi fi move [find comment=DROP-REQ-DNS] 0
 
 /ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS-REDIRECT
 /ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS-REDIRECT 
