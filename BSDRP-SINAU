@@ -1,0 +1,104 @@
+######### BSDRP #########
+
+# setelah instalasi rubah passwordnya, default dari user root tanpa password
+passwd
+
+# Interface em0 kita jadikan port management
+sysrc ifconfig_em0="inet 192.168.77.140 netmask 255.255.255.0"
+sysrc defaultrouter="192.168.77.254"
+sysrc sshd_enable="YES"
+sysrc autosave_enable="YES"
+service netif restart
+service sshd start
+service autosave start
+
+
+# Remote menggunakan SSH karena saya tau kalau ngetik terlalu banyak di console capek
+
+# Mount dengan mode write, tujuannya untuk merubah default config jika sewaktu waktu factory config
+
+mount -uw /
+
+# rubah default firewall menjadi allow any
+echo "net.inet.ip.fw.default_to_accept=1" >> /boot/loader.conf
+
+# Rubah file /conf/base/etc/rc.conf agar setelah di factory pun config dasar masih ada
+echo '# Tambahan config
+ifconfig_em0="inet 192.168.77.140 netmask 255.255.255.0"
+defaultrouter="192.168.77.254"
+autosave_enable="YES"
+sshd_enable="YES"
+bsnmpd_enable="YES"
+frr_enable="YES"
+frr_vtysh_boot="YES"
+firewall_enable="YES"
+firewall_script="/etc/ipfw.rules"
+' >> /conf/base/etc/rc.conf
+
+# Agar mesin dapat resolv domain ke ip maka perlu merujuk ke dns sever alias nameserver
+echo "nameserver 192.168.77.254
+nameserver 103.80.80.231
+nameserver 8.8.8.8
+" > /conf/base/etc/resolv.conf
+
+# dibawah ini contoh bandwidth limiter dan bisa juga ditambahkan untuk blokir contohnya samba
+cat > /conf/base/etc/ipfw.rules <<'EOF'
+#!/bin/sh
+fwcmd="/sbin/ipfw"
+if ! kldstat -q -m dummynet; then
+        kldload dummynet
+fi
+
+# Membuang semua config yg ada
+${fwcmd} -f flush
+
+# Contoh filter smb netbios
+${fwcmd} add deny udp from any to any dst-port 137 in via any
+${fwcmd} add deny udp from any to any dst-port 138 in via any
+${fwcmd} add deny tcp from any to any dst-port 139 in via any
+${fwcmd} add deny tcp from any to any dst-port 445 in via any
+
+# Membuat pipa limitasi bandwidth. Masuk dan keluar.
+${fwcmd} pipe 60 config bw 20Mbit/s
+${fwcmd} pipe 61 config bw 10Mbit/s
+# Menerapkan limitasi
+${fwcmd} add pipe 60 all from 192.168.77.254 to 10.11.12.1 out via any
+${fwcmd} add pipe 61 all from 10.11.12.1 to 192.168.77.254 in via any
+EOF
+
+mount -ur /
+
+cat /conf/base/etc/rc.conf > /etc/rc.conf
+cat /conf/base/etc/resolv.conf > /etc/resolv.conf
+cat /conf/base/etc/ipfw.rules > /etc/ipfw.rules
+
+# reboot mesin, kalau nggantung ya cabut colok kabel listriknya 
+
+reboot
+
+# setelah hidup lagi mari kita config
+
+# masuk ke FRR dan config
+vtysh
+conf t
+
+# test blackhole alias null
+ip route 10.1.2.3/32 Null0
+interface em1
+ ip address 10.11.12.2/24
+exit
+router bgp 65500
+ bgp router-id 192.168.77.140
+ no bgp ebgp-requires-policy
+ neighbor 192.168.77.254 remote-as 65501
+ neighbor 192.168.77.254 ebgp-multihop 4
+ address-family ipv4 unicast
+  redistribute static
+  redistribute table
+  redistribute connected
+  neighbor 192.168.77.254 next-hop-self
+  neighbor 192.168.77.254 soft-reconfiguration inbound
+end
+write
+exit
+config save
