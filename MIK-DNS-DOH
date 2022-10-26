@@ -1,10 +1,14 @@
-if ([:len [/int list find name=WAN]] = 0 ) do={ /int list add name=WAN; }
+if ([:len [/int list find name=WAN]] = 0 ) do={ 
+	/int list add name=WAN; 
+}
 foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
-:local VAR [/ip route get $i gateway-status ]
-:local A [:tostr $VAR]
-:local INT [:pick $A ( [:len [:pick $A 0 [:find $A "via"]]] + 5 ) [:len $A] ]
+	:local VAR [/ip route get $i gateway-status ]
+	:local A [:tostr $VAR]
+	:local INT [:pick $A ( [:len [:pick $A 0 [:find $A "via"]]] + 5 ) [:len $A] ]
 
-:if ([:len [/int list member find list=WAN interface="$INT"]] = 0) do={ /int list member add list=WAN interface="$INT" }
+	:if ([:len [/int list member find list=WAN interface="$INT"]] = 0) do={ 
+		/int list member add list=WAN interface="$INT" 
+	}
 }
 
 /ip fi fi add chain=input protocol=udp dst-port=53 in-interface-list=WAN action=reject comment=DROP-REQ-DNS
@@ -14,13 +18,13 @@ foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
 /ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS-REDIRECT
 /ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS-REDIRECT 
 /ip fi na move [find comment=DNS-REDIRECT] 0
-/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query
+/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query servers=103.80.80.232,103.80.80.231,8.8.8.8,8.8.4.4
 /ip dns static
 add address=103.80.80.232 name=dnslb.jsn.net.id
 add address=103.80.80.231 name=dnslb.jsn.net.id
 
 /system scheduler
-add interval=1m name=Check-DNS-JSN on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
+add disabled=yes interval=20s name=Check-DNS-JSN on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
     \n/ip dns static en [find comment=\"103.80.80.232\"] \r\
     \n} else={ \r\
     \n/ip dns static dis [find comment=\"103.80.80.232\"]\r\
@@ -29,10 +33,5 @@ add interval=1m name=Check-DNS-JSN on-event="if ( [resolve dnslb2.jsn.net.id ser
     \n/ip dns static en [find comment=\"103.80.80.231\"] \r\
     \n} else={ \r\
     \n/ip dns static dis [find comment=\"103.80.80.231\"]\r\
-    \n}\r\
-    \nif ( [/ip dns static get [find comment=\"103.80.80.231\"] disabled ] && [/ip dns static get [find comment=\"103.80.80.232\"] disabled ] ) do={\r\
-    \nip dns set servers=8.8.8.8,8.8.4.4 use-doh-server=\"\"\r\
-    \n} else={\r\
-    \n/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query servers=\"\"\r\
     \n}\r\
     \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup
