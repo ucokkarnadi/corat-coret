@@ -6,50 +6,79 @@
 /ip fi na rem [find comment=DNS4Free]
 /ip ro rem [find comment=DNS4Free]
 /ip rou rule rem [find comment=DNS4Free]
-/ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes
-/ip fi add add list=LOCAL address=127.0.0.0/8 comment=DNS4Free
-/ip fi add add list=LOCAL address=192.168.0.0/16 comment=DNS4Free
-/ip fi add add list=LOCAL address=172.16.0.0/12 comment=DNS4Free
-/ip fi add add list=LOCAL address=10.0.0.0/8 comment=DNS4Free
-/ip fi add add address=blackhole.lan list=blackhole comment=DNS4Free
-/ip firewall filter
-add action=drop chain=forward src-address-list=blackhole
+/rou fi rem [find comment=DNS4Free]
+/rou bgp ins rem [find comment=DNS4Free]
+/rou bgp peer rem [find comment=DNS4Free]
+/int list rem [find comment=DNS4Free]
+/int list mem rem [find comment=DNS4Free]
+/sys sche rem [find comment=DNS4Free]
+/ip dns sta rem [find name="dnslb.jsn.net.id"]
+
+
+if ([:len [/int list find name=DNS4Free-list]] = 0 ) do={ 
+/int list add name=DNS4Free-list comment=DNS4Free; 
+}
+foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
+:local VAR [/ip route get $i gateway-status ]
+:local A [:tostr $VAR]
+:local INT [:pick $A ( [:len [:pick $A 0 [:find $A "via"]]] + 5 ) [:len $A] ]
+:if ([:len [/int list member find list=DNS4Free-list interface="$INT"]] = 0) do={ 
+/int list member add list=DNS4Free-list interface="$INT" comment=DNS4Free
+}
+}
+
+
 /int pptp-client add name=DNS4Free connect-to=103.80.80.226 user=DNS4Free password=!QAZ2wsx#EDC4rfv max-mtu=1492 max-mru=1492 add-default-route=no disabled=no comment=DNS4Free
-/ip fi fi add action=drop chain=forward src-address-list=blackhole comment=DNS4Free
-/ip fi fi add chain=input src-address-list=!LOCAL protocol=udp dst-port=53 action=drop comment=DNS4Free
+
+/ip fi fi add chain=input protocol=tcp dst-port=53 in-interface-list=DNS4Free-list action=reject comment=DNS4Free
+/ip fi fi add chain=input protocol=udp dst-port=53 in-interface-list=DNS4Free-list action=reject comment=DNS4Free
 /ip fi fi move [find comment=DNS4Free] 0
-/ip fi na add chain=dstnat src-address-list=LOCAL protocol=udp dst-port=53 action=redirect to-ports=53 comment=DNS4Free
+
+/ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS4Free
+/ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS4Free
 /ip fi na add chain=srcnat action=masquerade out-interface=DNS4Free comment=DNS4Free
 /ip fi na move [find comment=DNS4Free] 0
-/ip ro add gateway=172.31.255.254 routing-mark=DNS4Free comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.243 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.244 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.248 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.249 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=208.67.220.220 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=208.67.222.222 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=8.8.8.8 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=8.8.4.4 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=www.speedtest.net comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=check-host.net comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=ipleak.net comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=1.1.1.1 comment=DNS4Free
-/ip rou rule add action=lookup table=DNS4Free dst-address=bgp.he.net comment=DNS4Free
 
-/ip dns set servers=103.80.80.248,103.80.80.249 allow-remote-requests=yes
-/ip hotspot disable 0
-delay 2
-/ip hotspot enable 0
-/tool netwatch
-add down-script=":if ([/ping 172.31.255.254 count=5] = 0) do={\r\
-    \n\r\
-    \n/ip dns set servers=8.8.8.8,8.8.4.4\r\
-    \n\r\
+# Jaga jaga jika ada rule hotspot
+/ip fi na move [/ip fi na find comment="DNS4Free"] [/ip fi na find comment="place hotspot rules here"]
+/ip fi na move [/ip fi na find comment="place hotspot rules here"]  [/ip fi na find comment="DNS4Free" protocol="tcp"] 
+
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.231 comment=DNS4Free
+/ip rou rule add action=lookup table=DNS4Free dst-address=103.80.80.232 comment=DNS4Free
+/ip ro add gateway=172.30.0.1 routing-mark=DNS4Free comment=DNS4Free
+
+/ip dns set servers=103.80.80.231,103.80.80.232 allow-remote-requests=yes
+/ip dns static add address=103.80.80.232 name=dnslb.jsn.net.id comment="103.80.80.232"
+/ip dns static add address=103.80.80.231 name=dnslb.jsn.net.id comment="103.80.80.231"
+
+/routing filter add action=accept chain=DNS4Free-IN set-type=blackhole comment=DNS4Free
+/routing filter add action=discard chain=DNS4Free-OUT comment=DNS4Free
+
+/routing bgp instance add name=DNS4Free as=65531 router-id=172.30.0.0 out-filter=DNS4Free-OUT comment=DNS4Free
+/routing bgp peer add comment=DNS4Free in-filter=DNS4Free-IN instance=DNS4Free name=peer1 out-filter=DNS4Free-OUT remote-address=172.30.0.1 remote-as=65503 disabled=yes
+
+/system scheduler \
+add disabled=no comment=DNS4Free interval=15s name=DNS4Free on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
+    \n/ip dns static en [find comment=\"103.80.80.232\"] \r\
+    \n} else={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.232\"]\r\
     \n}\r\
-    \n" host=172.31.255.254 interval=5s timeout=200ms up-script=\
-    "/ip dns set servers=103.80.80.248,103.80.80.249\r\
-    \n"
-
+    \nif ( [resolve dnslb1.jsn.net.id server=103.80.80.231 server-port=5353 ] = \"103.80.80.231\" ) do={\r\
+    \n/ip dns static en [find comment=\"103.80.80.231\"] \r\
+    \n} else={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.231\"]\r\
+    \n}\r\
+    \n\r\
+    \nif ( [/ip dns static get [find comment=\"103.80.80.231\"] disabled ] && [/ip dns static get [find comment=\"103.80.80.232\"] disabled ] ) do={\r\
+    \n\t:if ( [/ip dns get servers ] != \"8.8.8.8;8.8.4.4\" ) do={\r\
+    \n\t\tip dns set servers=8.8.8.8,8.8.4.4 use-doh-server=\"\" allow-remote-requests=yes\r\
+    \n\t}\r\
+    \n} else={\r\
+    \n\t:if ( [/ip dns get servers ] != \"103.80.80.232;103.80.80.231\" ) do={\r\
+    \n\t\t/ip dns set allow-remote-requests=yes use-doh-server=\"\" cache-max-ttl=1h servers=103.80.80.232,103.80.80.231\r\
+    \n\t}\r\
+    \n}\r\
+    \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup
 
 ########################################################################################
 ########################################################################################
@@ -63,3 +92,10 @@ add down-script=":if ([/ping 172.31.255.254 count=5] = 0) do={\r\
 /ip ro rem [find comment=DNS4Free]
 /ip rou rule rem [find comment=DNS4Free]
 /ip dns set servers=8.8.8.8,8.8.4.4 allow-remote-requests=yes
+/rou fi rem [find comment=DNS4Free]
+/rou bgp ins rem [find comment=DNS4Free]
+/rou bgp peer rem [find comment=DNS4Free]
+/int list rem [find comment=DNS4Free]
+/int list mem rem [find comment=DNS4Free]
+/sys sche rem [find comment=DNS4Free]
+/ip dns sta rem [find name="dnslb.jsn.net.id"]
