@@ -25,8 +25,8 @@ foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
 
 /ip dns set allow-remote-requests=yes cache-max-ttl=1h max-concurrent-queries=10000 max-concurrent-tcp-sessions=200 use-doh-server=https://dnslb.jsn.net.id/dns-query servers=103.80.80.232,103.80.80.231,203.119.13.77,203.119.13.78
 /ip dns static
-add address=103.80.80.232 name=dnslb.jsn.net.id
-add address=103.80.80.231 name=dnslb.jsn.net.id
+add address=103.80.80.232 name=dnslb.jsn.net.id comment="103.80.80.232"
+add address=103.80.80.231 name=dnslb.jsn.net.id comment="103.80.80.231"
 
 /system scheduler
 add disabled=yes interval=20s name=Check-DNS-JSN on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
