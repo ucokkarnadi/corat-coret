@@ -18,7 +18,7 @@ foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
 /ip fi na add chain=dstnat protocol=tcp dst-port=53 action=redirect comment=DNS-REDIRECT
 /ip fi na add chain=dstnat protocol=udp dst-port=53 action=redirect comment=DNS-REDIRECT 
 /ip fi na move [find comment=DNS-REDIRECT] 0
-/ip dns set allow-remote-requests=yes cache-max-ttl=1h use-doh-server=https://dnslb.jsn.net.id/dns-query servers=103.80.80.232,103.80.80.231,203.119.13.77,203.119.13.78
+/ip dns set allow-remote-requests=yes cache-max-ttl=1h max-concurrent-queries=10000 max-concurrent-tcp-sessions=200 use-doh-server=https://dnslb.jsn.net.id/dns-query servers=103.80.80.232,103.80.80.231,203.119.13.77,203.119.13.78
 /ip dns static
 add address=103.80.80.232 name=dnslb.jsn.net.id
 add address=103.80.80.231 name=dnslb.jsn.net.id
