@@ -7,17 +7,46 @@ passwd
 sysrc ifconfig_em0="inet 192.168.77.140 netmask 255.255.255.0"
 sysrc defaultrouter="192.168.77.254"
 sysrc sshd_enable="YES"
-sysrc autosave_enable="YES"
 service netif restart
 service sshd start
-service autosave start
-
 
 # Remote menggunakan SSH karena saya tau kalau ngetik terlalu banyak di console capek
+
+sysrc autosave_enable="YES"
+sysrc frr_enable="YES"
+sysrc frr_vtysh_boot="YES"
+service autosave start
+service frr start
+
+# masuk ke FRR dan config
+vtysh
+conf t
+
+# test blackhole alias null
+ip route 10.1.2.3/32 Null0
+interface em1
+ ip address 10.11.12.2/24
+exit
+router bgp 65500
+ bgp router-id 192.168.77.140
+ no bgp ebgp-requires-policy
+ neighbor 192.168.77.254 remote-as 65501
+ neighbor 192.168.77.254 ebgp-multihop 4
+ address-family ipv4 unicast
+  redistribute static
+  redistribute table
+  redistribute connected
+  neighbor 192.168.77.254 next-hop-self
+  neighbor 192.168.77.254 soft-reconfiguration inbound
+end
+write
+exit
+config save
 
 # Mount dengan mode write, tujuannya untuk merubah default config jika sewaktu waktu factory config
 
 mount -uw /
+mount /cfg
 
 # rubah default firewall menjadi allow any
 echo "net.inet.ip.fw.default_to_accept=1" >> /boot/loader.conf
@@ -66,52 +95,18 @@ ${fwcmd} add pipe 60 all from 192.168.77.254 to 10.11.12.1 out via any
 ${fwcmd} add pipe 61 all from 10.11.12.1 to 192.168.77.254 in via any
 EOF
 
-mount -ur /
+cat /cfg/master.passwd > /conf/base/etc/passwd
+cp /cfg/*.db /conf/base/etc/ 
+cp /etc/hostid /conf/base/etc/
+cp /cfg/ssh/* /conf/base/etc/ssh/
+cp -r /cfg/local/frr /conf/base/etc/
 
-cat /conf/base/etc/rc.conf > /etc/rc.conf
-cat /conf/base/etc/resolv.conf > /etc/resolv.conf
-cat /conf/base/etc/ipfw.rules > /etc/ipfw.rules
+# Jika menggunakn serial agar sama dengan serial boor mesin
+sed -i "" -e "s/115200/9600/g" /boot.config
+
+mount -ur /
 
 # reboot mesin, kalau nggantung ya cabut colok kabel listriknya 
 
 reboot
 
-# setelah hidup lagi mari kita config
-
-# masuk ke FRR dan config
-vtysh
-conf t
-
-# test blackhole alias null
-ip route 10.1.2.3/32 Null0
-interface em1
- ip address 10.11.12.2/24
-exit
-router bgp 65500
- bgp router-id 192.168.77.140
- no bgp ebgp-requires-policy
- neighbor 192.168.77.254 remote-as 65501
- neighbor 192.168.77.254 ebgp-multihop 4
- address-family ipv4 unicast
-  redistribute static
-  redistribute table
-  redistribute connected
-  neighbor 192.168.77.254 next-hop-self
-  neighbor 192.168.77.254 soft-reconfiguration inbound
-end
-write
-exit
-config save
-
-
-#################################################
-
-mount -uw /
-mount /cfg
-mount /data
-
-copy file master.passwd dari /cfg ke /conf/base/etc/passwd
-copy pwd.db dan spwd.db  dari /cfg ke /conf/base/etc/ 
-copy hostid dari /cfg ke /conf/base/etc/
-copy /cfg/ssh/* ke /conf/base/etc/ssh/
-copy /cfg/local/frr ke /conf/base/etc/
