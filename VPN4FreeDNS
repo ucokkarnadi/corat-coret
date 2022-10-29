@@ -58,25 +58,32 @@ foreach i in=[/ip rou find dst-address=0.0.0.0/0 active=yes] do={
 /routing bgp peer add comment=DNS4Free in-filter=DNS4Free-IN instance=DNS4Free name=peer1 out-filter=DNS4Free-OUT remote-address=172.30.0.1 remote-as=65503 disabled=yes
 
 /system scheduler \
-add disabled=no comment=DNS4Free interval=15s name=DNS4Free on-event="if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
+add comment=DNS4Free interval=10s name=DNS4Free on-event=":do { if ( [resolve dnslb2.jsn.net.id server=103.80.80.232 server-port=5353 ] = \"103.80.80.232\" ) do={\r\
     \n/ip dns static en [find comment=\"103.80.80.232\"] \r\
     \n} else={ \r\
     \n/ip dns static dis [find comment=\"103.80.80.232\"]\r\
+    \n} \r\
+    \n} on-error={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.232\"]\r\
     \n}\r\
-    \nif ( [resolve dnslb1.jsn.net.id server=103.80.80.231 server-port=5353 ] = \"103.80.80.231\" ) do={\r\
+    \n\r\
+    \n:do { if ( [resolve dnslb1.jsn.net.id server=103.80.80.231 server-port=5353 ] = \"103.80.80.231\" ) do={\r\
     \n/ip dns static en [find comment=\"103.80.80.231\"] \r\
     \n} else={ \r\
     \n/ip dns static dis [find comment=\"103.80.80.231\"]\r\
     \n}\r\
+    \n} on-error={ \r\
+    \n/ip dns static dis [find comment=\"103.80.80.231\"]\r\
+    \n}\r\
     \n\r\
     \nif ( [/ip dns static get [find comment=\"103.80.80.231\"] disabled ] && [/ip dns static get [find comment=\"103.80.80.232\"] disabled ] ) do={\r\
-    \n\t:if ( [/ip dns get servers ] != \"8.8.8.8;8.8.4.4\" ) do={\r\
-    \n\t\tip dns set servers=8.8.8.8,8.8.4.4 use-doh-server=\"\" allow-remote-requests=yes\r\
-    \n\t}\r\
+    \n:if ( [/ip dns get servers ] != \"8.8.8.8;8.8.4.4\" ) do={\r\
+    \nip dns set servers=8.8.8.8,8.8.4.4 use-doh-server=\"\" allow-remote-requests=yes\r\
+    \n}\r\
     \n} else={\r\
-    \n\t:if ( [/ip dns get servers ] != \"103.80.80.232;103.80.80.231\" ) do={\r\
-    \n\t\t/ip dns set allow-remote-requests=yes use-doh-server=\"\" cache-max-ttl=1h servers=103.80.80.232,103.80.80.231\r\
-    \n\t}\r\
+    \n:if ( [/ip dns get servers ] != \"103.80.80.232;103.80.80.231\" ) do={\r\
+    \n/ip dns set allow-remote-requests=yes use-doh-server=\"\" cache-max-ttl=1h servers=103.80.80.232,103.80.80.231\r\
+    \n}\r\
     \n}\r\
     \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup
 
