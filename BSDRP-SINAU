@@ -102,3 +102,16 @@ end
 write
 exit
 config save
+
+
+#################################################
+
+mount -uw /
+mount /cfg
+mount /data
+
+copy file master.passwd dari /cfg ke /conf/base/etc/passwd
+copy pwd.db dan spwd.db  dari /cfg ke /conf/base/etc/ 
+copy hostid dari /cfg ke /conf/base/etc/
+copy /cfg/ssh/* ke /conf/base/etc/ssh/
+copy /cfg/local/frr ke /conf/base/etc/
