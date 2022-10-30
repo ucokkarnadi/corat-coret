@@ -87,8 +87,18 @@ add comment=DNS4Free interval=10s name=DNS4Free on-event=":do { if ( [resolve dn
     \n}\r\
     \n" policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon start-time=startup
 
-########################################################################################
-########################################################################################
+##############################################################################################
+##############################################################################################
+##                                                                                          ##
+##                                                                                          ##
+##    BAGI RT/RW NET WAJIB UNTUK ENABLE BGP PEER UNTUK MENGURANGI MALWARE DAN RANSOMWARE    ##
+##                                                                                          ##
+##                   /routing bgp peer en [find comment=DNS4Free]                           ##
+##                                                                                          ##
+##                                                                                          ##
+##############################################################################################
+##############################################################################################
+
 
 # BAGI YANG INGIN MEMBUANG RULE DIATAS BERIKUT PERINTAHNYA
 
