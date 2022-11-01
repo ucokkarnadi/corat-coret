@@ -23,16 +23,17 @@ vtysh
 conf t
 
 # test blackhole alias null
-ip route 10.1.2.3/32 Null0
 interface em1
  ip address 10.11.12.2/24
 exit
 router bgp 65500
  bgp router-id 192.168.77.140
  no bgp ebgp-requires-policy
+ no bgp network import-check
  neighbor 192.168.77.254 remote-as 65501
  neighbor 192.168.77.254 ebgp-multihop 4
  address-family ipv4 unicast
+  network 10.1.2.3/32
   redistribute static
   redistribute table
   redistribute connected
