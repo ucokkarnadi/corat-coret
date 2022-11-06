@@ -102,12 +102,13 @@ cp /etc/hostid /conf/base/etc/
 cp /cfg/ssh/* /conf/base/etc/ssh/
 cp -r /cfg/local/frr /conf/base/etc/
 
-# Jika menggunakn serial agar sama dengan serial boor mesin
+# Jika menggunakn serial agar sama dengan serial boot mesin
 sed -i "" -e "s/115200/9600/g" /boot.config
 
 mount -ur /
 
-# reboot mesin, kalau nggantung ya cabut colok kabel listriknya 
+# reboot mesin, kalau nggantung ya cabut colok kabel listriknya
+# Jangan lupa disable EFI di bios agar nggak menggantung saat shutdown
 
 reboot
 
