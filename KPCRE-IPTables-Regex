@@ -1,4 +1,4 @@
-# Referensi https://github.com/xnsystems/kpcre
+# Referensi https://github.com/smcho-kr/kpcre
 
 # install DKMS
 
@@ -13,7 +13,7 @@ yum install dkms
 
 # Setelah itu lanjut ke modul regex di kernel untuk iptable
 
-git clone https://github.com/xnsystems/kpcre.git
+git clone https://github.com/smcho-kr/kpcre.git
 mv kpcre /usr/src/kpcre-1.0.0
 dkms add -m kpcre -v 1.0.0
 dkms build -m kpcre -v 1.0.0
