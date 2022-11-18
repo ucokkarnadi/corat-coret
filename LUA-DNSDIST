@@ -1,0 +1,104 @@
+##### dibawah ini hanya untuk keluarga linux, jika menggunakan freebsd maka sesuaikan file config dnsdistnya 
+
+##### Linux di /etc/dnsdist/dnsdist.conf
+
+##### Freebsd di /usr/local/etc/dnsdist/dnsdist.conf
+
+
+mkdir /opt/dnsdist; touch /opt/dnsdist/blocklist.dom; 
+curl https://urlhaus.abuse.ch/downloads/rpz/ | grep CNAME | awk '{print $1}' | sort | uniq | awk '{print $1 "."}' > /opt/dnsdist/blocklist
+curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | grep "^0\.0\.0\.0" | awk '{print $2}' | grep -v "0\.0\.0\.0" | sort | uniq | awk '{print $1 "."}' >> /opt/dnsdist/blocklist
+cat /opt/dnsdist/blocklist | sort | uniq > /opt/dnsdist/blocklist.dom
+chown -R _dnsdist:_dnsdist /opt/dnsdist; chmod -R 7777 /opt/dnsdist
+cd /opt/dnsdist/; su -s /bin/sh _dnsdist ; # Test buat file ; sed -i "/^\$*$/d; s/\s*//g; /\.$/ ! s/$/\./" /opt/dnsdist/blocklist.dom
+if [ $(cat /etc/dnsdist/dnsdist.conf | grep includeDirectory | awk -F'(' '{print $1}') != "includeDirectory" ]
+then
+echo 'includeDirectory("/opt/dnsdist")' >> /etc/dnsdist/dnsdist.conf
+else
+echo "sudah ada, lokasinya :" $(cat /etc/dnsdist/dnsdist.conf | grep includeDirectory)
+fi
+
+cat <<AKHIRFILE > /etc/dnsdist/conf.d/block.conf
+Block = {
+	config = {
+		blocklist = "/opt/dnsdist/blocklist.dom",
+		reload = "reload.blocklist.jsn.",
+		unload = "unload.blocklist.jsn.",
+	},
+	table = {
+		smn = newSuffixMatchNode(),
+		str = {},
+	},
+}
+
+function BlockLoadDomainsFromFile(file)
+	local f = io.open(file, "rb")
+	local ctr = 0
+	if f ~= nil then
+		for domain in f:lines() do
+			ctr = ctr + 1
+			if string.find(domain, "*") then
+				local suffix = domain:gsub("*.", "")
+				Block.table.smn:add(suffix)
+			else
+				Block.table.str[domain] = 1
+			end
+		end
+		errlog ( "[Block] data sebanyak " .. ctr .. " baris telah di proses" )
+		f:close()
+	end
+end
+
+function BlockLoadBlocklist()
+	local file = Block.config.blocklist
+	local f = io.open(file, "rb")
+	if f ~= nil then
+		f:close()
+--                sed -i "/^\s*$/d; s/\s*//g; /\.$/ ! s/$/\./" /opt/dnsdist/blocklist.dom
+		local cmd = string.format('sed -i "/^\\\\s*$/d; s/\\\\s*//g; /\\\\.$/ ! s/$/\\\\./" "%s"', file)
+		os.execute( cmd )
+	end
+	BlockLoadDomainsFromFile(file)
+end
+
+function BlockClearTable()
+	Block.table = {
+		smn = newSuffixMatchNode(),
+		str = {},
+	}
+end
+
+function BlockIsDomainBlocked(dq)
+	local qname = dq.qname:toString():lower()
+
+	if Block.table.str[qname] or Block.table.smn:check(dq.qname) then
+		dq.dh:setQR(true)
+		return DNSAction.Nxdomain, ""
+	end
+	return DNSAction.None, ""
+end
+addAction(AllRule(), LuaAction(BlockIsDomainBlocked))
+
+function BlockReloadBlocklist(dq)
+	errlog "[Block] memuat data blocklist.........!!!"
+	dq.dh:setQR(true)
+	BlockClearTable()
+	collectgarbage "collect"
+	BlockLoadBlocklist()
+	collectgarbage "collect"
+	errlog "[Block] memuat data blocklist selesai !!!"
+	return DNSAction.Spoof, "0.0.0.1"
+end
+addAction(Block.config.reload, LuaAction(BlockReloadBlocklist))
+
+function BlockUnloadBlocklist(dq)
+	dq.dh:setQR(true)
+	BlockClearTable()
+	collectgarbage "collect"
+	return DNSAction.Spoof, "0.0.0.0"
+end
+addAction(Block.config.unload, LuaAction(BlockUnloadBlocklist))
+
+AKHIRFILE
+
+history -c
