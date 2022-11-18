@@ -1,9 +1,4 @@
-# PIHOLE-PATCH
+# SEKEDAR CATATAN USANG
 
-untuk patch pihole agar ada option dns sehat
-
-cd /var/www/html/admin/scripts/pi-hole/php;
-
-wget https://raw.githubusercontent.com/ucokkarnadi/corat-coret/master/savesettings.php.patch;
-
-patch -p0 < savesettings.php.patch;
+hanya menyelamatkan hasil corat coret di system dan jaringan daripada hilang ditelan waktu.
+semoga ada manfaatnya bagi para pengunjung.
