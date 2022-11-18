@@ -1,5 +1,7 @@
-##### dibawah ini hanya untuk keluarga linux, jika menggunakan freebsd maka sesuaikan file config dnsdistnya 
+# SCRIPT LUA DIAMBIL DARI https://github.com/enilfodne/dnsdist-adblock
 
+##### dibawah ini hanya untuk keluarga linux, jika menggunakan freebsd maka sesuaikan file config dnsdistnya 
+#####
 ##### Linux di /etc/dnsdist/dnsdist.conf
 
 ##### Freebsd di /usr/local/etc/dnsdist/dnsdist.conf
