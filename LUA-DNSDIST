@@ -3,7 +3,7 @@
 ##### Linux di /etc/dnsdist/dnsdist.conf
 
 ##### Freebsd di /usr/local/etc/dnsdist/dnsdist.conf
-
+##### mkdir -p /opt/dnsdist; chmod -R 7777 /opt ; chown -R _dnsdist /opt
 
 mkdir /opt/dnsdist; touch /opt/dnsdist/blocklist.dom; 
 curl https://urlhaus.abuse.ch/downloads/rpz/ | grep CNAME | awk '{print $1}' | sort | uniq | awk '{print $1 "."}' > /opt/dnsdist/blocklist
