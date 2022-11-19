@@ -8,23 +8,23 @@
 ##### mkdir /usr/local/etc/dnsdist/conf.d ; chown -R _dnsdist /usr/local/etc/dnsdist/conf.d ; chmod -R 7777 /usr/local/etc/dnsdist/conf.d
 
 
-mkdir /opt/dnsdist; touch /opt/dnsdist/blocklist.dom; 
-curl https://urlhaus.abuse.ch/downloads/rpz/ | grep CNAME | awk '{print $1}' | sort | uniq | awk '{print $1 "."}' > /opt/dnsdist/blocklist
-curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | grep "^0\.0\.0\.0" | awk '{print $2}' | grep -v "0\.0\.0\.0" | sort | uniq | awk '{print $1 "."}' >> /opt/dnsdist/blocklist
-cat /opt/dnsdist/blocklist | sort | uniq > /opt/dnsdist/blocklist.dom
-chown -R _dnsdist:_dnsdist /opt/dnsdist; chmod -R 7777 /opt/dnsdist
-cd /opt/dnsdist/; su -s /bin/sh _dnsdist ; # Test buat file ; sed -i "/^\$*$/d; s/\s*//g; /\.$/ ! s/$/\./" /opt/dnsdist/blocklist.dom
+mkdir /usr/local/etc/dnsdist/conf.d; touch /usr/local/etc/dnsdist/conf.d/blocklist.dom; 
+curl https://urlhaus.abuse.ch/downloads/rpz/ | grep CNAME | awk '{print $1}' | sort | uniq | awk '{print $1 "."}' > /usr/local/etc/dnsdist/conf.d/blocklist
+curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | grep "^0\.0\.0\.0" | awk '{print $2}' | grep -v "0\.0\.0\.0" | sort | uniq | awk '{print $1 "."}' >> /usr/local/etc/dnsdist/conf.d/blocklist
+cat /usr/local/etc/dnsdist/conf.d/blocklist | sort | uniq > /opt/dnsdist/blocklist.dom
+chown -R _dnsdist /usr/local/etc/dnsdist ; chmod -R 7777 /usr/local/etc/dnsdist
+cd /usr/local/etc/dnsdist/conf.d/; su -s /bin/sh _dnsdist ; # Test buat file ; sed -i "/^\$*$/d; s/\s*//g; /\.$/ ! s/$/\./" /usr/local/etc/dnsdist/conf.d/blocklist.dom
 if [ $(cat /etc/dnsdist/dnsdist.conf | grep includeDirectory | awk -F'(' '{print $1}') != "includeDirectory" ]
 then
-echo 'includeDirectory("/opt/dnsdist")' >> /etc/dnsdist/dnsdist.conf
+echo 'includeDirectory("/usr/local/etc/dnsdist/conf.d")' >> /etc/dnsdist/dnsdist.conf
 else
 echo "sudah ada, lokasinya :" $(cat /etc/dnsdist/dnsdist.conf | grep includeDirectory)
 fi
 
-cat <<AKHIRFILE > /etc/dnsdist/conf.d/block.conf
+masukkan baris dibawah ini samppai --AKHIRFILE ke /etc/dnsdist/conf.d/block.conf
 Block = {
 	config = {
-		blocklist = "/opt/dnsdist/blocklist.dom",
+		blocklist = "/usr/local/etc/dnsdist/conf.d/blocklist.dom",
 		reload = "reload.blocklist.jsn.",
 		unload = "unload.blocklist.jsn.",
 	},
@@ -60,11 +60,11 @@ function BlockLoadBlocklist()
 		
 --		sed -i '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\.$/ ! s/$/\./'
 
---		untuk di freebsd jika menggunakan cat EOF maka backslash harus 4 sedangkan di script terlihat dobel saja
---		local cmd = ( "sed -i '' '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\\\.$/ ! s/$/\\\\./' " .. file )
+--		untuk di freebsd, perbedaan sed di freebsd menginfokan ada file backup atau tidak. '' artinya tidak ada backup
+--		local cmd = ( "sed -i '' '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\.$/ ! s/$/\\./' " .. file )
 
---		untuk di linux jika menggunakan cat EOF maka backslash harus 4 sedangkan di script terlihat dobel saja
-		local cmd = ( "sed -i '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\\\.$/ ! s/$/\\\\./' " .. file )
+--		untuk di linux
+		local cmd = ( "sed -i '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\.$/ ! s/$/\\./' " .. file )
 		os.execute( cmd )
 	end
 	BlockLoadDomainsFromFile(file)
@@ -108,6 +108,9 @@ function BlockUnloadBlocklist(dq)
 end
 addAction(Block.config.unload, LuaAction(BlockUnloadBlocklist))
 
-AKHIRFILE
+-- AKHIRFILE
+
+
+
 
 history -c
