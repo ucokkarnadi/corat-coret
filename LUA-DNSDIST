@@ -57,8 +57,14 @@ function BlockLoadBlocklist()
 	local f = io.open(file, "rb")
 	if f ~= nil then
 		f:close()
---                sed -i "/^\s*$/d; s/\s*//g; /\.$/ ! s/$/\./" /opt/dnsdist/blocklist.dom
-		local cmd = string.format('sed -i "/^\\\\s*$/d; s/\\\\s*//g; /\\\\.$/ ! s/$/\\\\./" "%s"', file)
+		
+--		sed -i '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\.$/ ! s/$/\./'
+
+--		untuk di freebsd jika menggunakan cat EOF maka backslash harus 4 sedangkan di script terlihat dobel saja
+--		local cmd = ( "sed -i '' '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\\\.$/ ! s/$/\\\\./' " .. file )
+
+--		untuk di linux jika menggunakan cat EOF maka backslash harus 4 sedangkan di script terlihat dobel saja
+		local cmd = ( "sed -i '/^[[:space:]]*$/d; s/[[:space:]]*//g; /\\\\.$/ ! s/$/\\\\./' " .. file )
 		os.execute( cmd )
 	end
 	BlockLoadDomainsFromFile(file)
