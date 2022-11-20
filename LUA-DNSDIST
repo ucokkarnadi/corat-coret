@@ -8,11 +8,11 @@
 ##### mkdir /usr/local/etc/dnsdist/conf.d ; chown -R _dnsdist /usr/local/etc/dnsdist/conf.d ; chmod -R 7777 /usr/local/etc/dnsdist/conf.d
 
 
-mkdir /usr/local/etc/dnsdist/conf.d; touch /usr/local/etc/dnsdist/conf.d/blocklist.dom; 
+mkdir -p /usr/local/etc/dnsdist/conf.d; touch /usr/local/etc/dnsdist/conf.d/blocklist.dom; 
 curl https://urlhaus.abuse.ch/downloads/rpz/ | grep CNAME | awk '{print $1}' | sort | uniq | awk '{print $1 "."}' > /usr/local/etc/dnsdist/conf.d/blocklist
 curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | grep "^0\.0\.0\.0" | awk '{print $2}' | grep -v "0\.0\.0\.0" | sort | uniq | awk '{print $1 "."}' >> /usr/local/etc/dnsdist/conf.d/blocklist
 cat /usr/local/etc/dnsdist/conf.d/blocklist | sort | uniq > /opt/dnsdist/blocklist.dom
-chown -R _dnsdist /usr/local/etc/dnsdist ; chmod -R 7777 /usr/local/etc/dnsdist
+mkdir -p /usr/local/etc/dnsdist/conf.d; chown -R _dnsdist /usr/local/etc/dnsdist ; chmod -R 7777 /usr/local/etc/dnsdist
 cd /usr/local/etc/dnsdist/conf.d/; su -s /bin/sh _dnsdist ; # Test buat file ; sed -i "/^\$*$/d; s/\s*//g; /\.$/ ! s/$/\./" /usr/local/etc/dnsdist/conf.d/blocklist.dom
 if [ $(cat /etc/dnsdist/dnsdist.conf | grep includeDirectory | awk -F'(' '{print $1}') != "includeDirectory" ]
 then
