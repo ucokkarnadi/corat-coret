@@ -16,7 +16,7 @@
     ]
   },
   "description": "Fastnetmon",
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "gnetId": 7378,
   "graphTooltip": 0,
@@ -46,6 +46,7 @@
             }
           ],
           "max": 45000,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -189,6 +190,7 @@
               "type": "special"
             }
           ],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -198,11 +200,11 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 30000000
+                "value": 5000000
               },
               {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 50000000
+                "value": 10000000
               }
             ]
           },
@@ -328,6 +330,7 @@
               "type": "special"
             }
           ],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -337,11 +340,11 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 3000000
+                "value": 5000000
               },
               {
                 "color": "rgba(245, 54, 54, 0.9)",
-                "value": 5000000
+                "value": 10000000
               }
             ]
           },
@@ -468,6 +471,7 @@
             }
           ],
           "max": 45000,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -605,7 +609,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMin": 0,
+            "axisSoftMin": 1000000000,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -665,7 +669,9 @@
           ],
           "displayMode": "table",
           "placement": "right",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -736,6 +742,7 @@
         "type": "influxdb",
         "uid": "fastnetmoninfluxdbdatasource"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -746,7 +753,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMin": 0,
+            "axisSoftMin": 500000000,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -842,7 +849,7 @@
           "measurement": "hosts_traffic",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"bits_incoming\") FROM \"default\".\"hosts_traffic\" WHERE (\"bits_incoming\"::field > 100000000 ) AND $timeFilter GROUP BY time($__interval), \"host\"::tag fill(previous)",
+          "query": "SELECT mean(\"bits_outgoing\") FROM \"default\".\"hosts_traffic\" WHERE (\"bits_outgoing\"::field > 500000000) AND $timeFilter GROUP BY time($__interval), \"host\"::tag fill(previous)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -888,7 +895,7 @@
             "axisGridShow": true,
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMin": 0,
+            "axisSoftMin": 100000,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -1031,7 +1038,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMin": 0,
+            "axisSoftMin": 60000,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -1091,7 +1098,9 @@
           ],
           "displayMode": "table",
           "placement": "right",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -1119,7 +1128,7 @@
             },
             {
               "params": [
-                "previous"
+                "linear"
               ],
               "type": "fill"
             }
@@ -1127,7 +1136,7 @@
           "measurement": "hosts_traffic",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"packets_outgoing\") FROM \"default\".\"hosts_traffic\" WHERE (\"packets_outgoing\"::field > 100000) AND $timeFilter GROUP BY time($__interval), \"packets_outgoing\"::tag fill(previous)",
+          "query": "SELECT mean(\"packets_outgoing\") FROM \"default\".\"hosts_traffic\" WHERE (\"packets_outgoing\"::field > 50000) AND $timeFilter GROUP BY time($__interval), \"host\"::tag fill(previous)",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1149,12 +1158,12 @@
             {
               "key": "packets_outgoing::field",
               "operator": ">",
-              "value": "50000"
+              "value": "60000"
             }
           ]
         }
       ],
-      "title": "Top Outgoing ( Packets ) > 50 kpps",
+      "title": "Top Outgoing ( Packets ) > 60 kpps",
       "type": "timeseries"
     }
   ],
@@ -1224,6 +1233,6 @@
   "timezone": "browser",
   "title": "Fastnetmon",
   "uid": "TNzC_zciz",
-  "version": 43,
+  "version": 61,
   "weekStart": ""
 }
