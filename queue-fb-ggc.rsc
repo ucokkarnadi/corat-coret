@@ -2,20 +2,20 @@
 
 # QUEUE UNTUK FACEBOOK GROUP
 /queue simple
-add dst=10.0.0.0/8 max-limit=4290M/4290M name=01-FB-WA-IG queue=ethernet-default/ethernet-default \
+add dst=10.0.0.0/8 max-limit=4290M/4290M name=03-FB-IPv4 queue=ethernet-default/ethernet-default \
 	target="31.13.24.0/21,31.13.64.0/18,31.13.95.0/24,31.13.96.0/19,45.64.40.0/22,66.111.48.0/22,66.111.50.0/24,66.220.144.0/20,\
 	66.220.144.0/21,66.220.152.0/21,69.63.176.0/20,69.63.176.0/21,69.63.184.0/21,69.171.224.0/19,69.171.224.0/20,69.171.240.0/20,\
 	69.171.250.0/24,74.119.76.0/22,102.132.96.0/20,103.4.96.0/22,129.134.0.0/17,129.134.25.0/24,129.134.27.0/24,129.134.30.0/23,\
 	157.240.0.0/17,157.240.192.0/18,157.240.208.0/24,163.70.128.0/17,163.114.128.0/20,163.114.133.0/24,173.252.64.0/19,173.252.88.0/21,\
 	173.252.96.0/19,179.60.192.0/22,185.60.216.0/22,185.89.218.0/23,185.89.218.0/24,199.201.64.0/22,199.201.67.0/24,204.15.20.0/22"
 
+/queue simple
+add dst=2400:4ec0::/32 max-limit=1G/1G name=01-FB-IPv6 target=2620:0:1c00::/40,2620:10d:c090::/44,2620:13e:1000::/44,2a03:2880::/32
 
 
 # QUEUE UNTUK GGC
 /queue simple
-add dst=10.0.0.0/8 max-limit=4290M/4290M name=02-GGC queue=ethernet-default/ethernet-default target=103.80.80.128/27,103.153.148.128/27
+add dst=10.0.0.0/8 max-limit=4290M/4290M name=04-GGC-IPv4 queue=ethernet-default/ethernet-default target=103.80.80.128/27,103.153.148.128/27
 
-/que sim pr wi
-/que sim move [find name~"GGC"] 0
-/que sim pr wi
-/que sim move [find name~"FB"] 0
+/queue simple
+add dst=2400:4ec0::/32 max-limit=1G/1G name=02-GGC-IPv6 target=2400:4ec0:ffff:fffe::/64,2406:45c0:ffff:fffe::/64
