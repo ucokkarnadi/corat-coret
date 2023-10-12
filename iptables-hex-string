@@ -1,0 +1,15 @@
+# file txt adalah file yg berisi domain yg ingin di masukkan dalam iptables
+
+for i in $(cat txt)
+do
+b=$i
+for element in ${b//./ }
+do 
+if ((${#element} < 10))
+then
+echo "|0${#element}|$element"
+else
+echo "|${#element}|$element"
+fi
+done | awk -v d="" '{s=(NR==1?s:s d)$0}END{print "iptables -I INPUT 1 -p udp --dport 53 -m string --hex-string \"" s "\" --algo bm -j DROP"}'
+done
