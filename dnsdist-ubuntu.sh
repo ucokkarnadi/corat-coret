@@ -13,7 +13,7 @@ apt remove -y --purge bind9 dnsdist
 apt autoremove -y
 rm -rf /var/cache/bind /etc/bind
 
-apt install -y dnsdist
+apt install -y dnsdist net-tools
 service dnsdist stop
 
 echo '-- Config untuk DNSDIST Mitra JSN 
