@@ -76,3 +76,4 @@ addAction(AndRule({SuffixMatchNodeRule(smnptr), QTypeRule(DNSQType.PTR)}), Spoof
 ' > /etc/dnsdist/dnsdist.conf
 
 service dnsdist start
+netstat -tupln
