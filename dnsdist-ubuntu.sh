@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Gunakan perintah 
+# Gunakan perintah "curl -sSL https://raw.githubusercontent.com/ucokkarnadi/corat-coret/master/dnsdist-ubuntu.sh | bash" 
+
+echo "deb [signed-by=/etc/apt/keyrings/dnsdist-18-pub.asc arch=amd64] http://repo.powerdns.com/ubuntu jammy-dnsdist-18 main" > /etc/apt/sources.list.d/pdns.list
+apt update
+
 service bind9 stop
 systemctl disable bind9
 service systemd-resolved stop
@@ -9,7 +13,7 @@ apt remove -y --purge bind9 dnsdist
 apt autoremove -y
 rm -rf /var/cache/bind /etc/bind
 
-apt install dnsdist
+apt install -y dnsdist
 service dnsdist stop
 
 echo '-- Config untuk DNSDIST Mitra JSN 
