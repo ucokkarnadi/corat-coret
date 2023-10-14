@@ -1,0 +1,48 @@
+iptables -I INPUT 1 -p tcp -s 103.80.80.0/22 --dport 53 -j ACCEPT
+iptables -I INPUT 2 -p tcp -s 103.153.148.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 3 -p tcp -s 103.13.204.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 4 -p tcp -s 103.18.232.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 5 -p tcp -s 103.46.8.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 6 -p tcp -s 103.67.46.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 7 -p tcp -s 192.168.0.0/16 --dport 53 -j ACCEPT
+iptables -I INPUT 8 -p tcp -s 172.16.0.0/12 --dport 53 -j ACCEPT
+iptables -I INPUT 9 -p tcp -s 10.0.0.0/8 --dport 53 -j ACCEPT
+iptables -I INPUT 10 -p tcp -s 127.0.0.0/8 --dport 53 -j ACCEPT
+iptables -I INPUT 11 -p tcp -s 27.54.116.66 --dport 53 -j ACCEPT
+iptables -I INPUT 12 -p tcp -s 103.154.123.130 --dport 53 -j ACCEPT
+iptables -I INPUT 13 -p tcp --dport 53 -j DROP
+iptables -I INPUT 1 -p udp -s 103.80.80.0/22 --dport 53 -j ACCEPT
+iptables -I INPUT 2 -p udp -s 103.153.148.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 3 -p udp -s 103.13.204.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 4 -p udp -s 103.18.232.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 5 -p udp -s 103.46.8.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 6 -p udp -s 103.67.46.0/23 --dport 53 -j ACCEPT
+iptables -I INPUT 7 -p udp -s 192.168.0.0/16 --dport 53 -j ACCEPT
+iptables -I INPUT 8 -p udp -s 172.16.0.0/12 --dport 53 -j ACCEPT
+iptables -I INPUT 9 -p udp -s 10.0.0.0/8 --dport 53 -j ACCEPT
+iptables -I INPUT 10 -p udp -s 127.0.0.0/8 --dport 53 -j ACCEPT
+iptables -I INPUT 11 -p udp -s 27.54.116.66 --dport 53 -j ACCEPT
+iptables -I INPUT 12 -p udp -s 103.154.123.130 --dport 53 -j ACCEPT
+iptables -I INPUT 13 -p udp --dport 53 -j DROP
+
+ip6tables -I INPUT 1 -p tcp -s 2400:4ec0::/32 --dport 53 -j ACCEPT
+ip6tables -I INPUT 2 -p tcp -s 2406:45c0::/32 --dport 53 -j ACCEPT
+ip6tables -I INPUT 3 -p tcp -s ::1 --dport 53 -j ACCEPT
+ip6tables -I INPUT 4 -p tcp --dport 53 -j DROP
+ip6tables -I INPUT 1 -p udp -s 2400:4ec0::/32 --dport 53 -j ACCEPT
+ip6tables -I INPUT 2 -p udp -s 2406:45c0::/32 --dport 53 -j ACCEPT
+ip6tables -I INPUT 3 -p udp -s ::1 --dport 53 -j ACCEPT
+ip6tables -I INPUT 4 -p udp --dport 53 -j DROP
+
+iptables -t raw -A PREROUTING -p udp -m udp --dport 53 -j CT --notrack
+iptables -t raw -A PREROUTING -p udp -m udp --sport 53 -j CT --notrack
+iptables -t raw -A OUTPUT -p udp -m udp --dport 53 -j CT --notrack
+iptables -t raw -A OUTPUT -p udp -m udp --sport 53 -j CT --notrack
+ip6tables -t raw -A PREROUTING -p udp -m udp --dport 53 -j CT --notrack
+ip6tables -t raw -A PREROUTING -p udp -m udp --sport 53 -j CT --notrack
+ip6tables -t raw -A OUTPUT -p udp -m udp --dport 53 -j CT --notrack
+ip6tables -t raw -A OUTPUT -p udp -m udp --sport 53 -j CT --notrack
+
+ip6tables-save > /etc/iptables/rules.v6
+iptables-save > /etc/iptables/rules.v4
+
