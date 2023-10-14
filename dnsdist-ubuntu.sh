@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# Gunakan perintah 
 service bind9 stop
 systemctl disable bind9
 service systemd-resolved stop
 systemctl disable systemd-resolved
+apt remove -y --purge bind9 dnsdist
+apt autoremove -y
+rm -rf /var/cache/bind /etc/bind
 
 apt install dnsdist
 service dnsdist stop
