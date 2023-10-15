@@ -3,6 +3,11 @@
 # Gunakan perintah "curl -sSL https://raw.githubusercontent.com/ucokkarnadi/corat-coret/master/dnsdist-ubuntu.sh | bash" 
 
 echo "deb [signed-by=/etc/apt/keyrings/dnsdist-18-pub.asc arch=amd64] http://repo.powerdns.com/ubuntu jammy-dnsdist-18 main" > /etc/apt/sources.list.d/pdns.list
+echo "Package: dnsdist*
+Pin: origin repo.powerdns.com
+Pin-Priority: 600" > /etc/apt/preferences.d/dnsdist-18
+install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/dnsdist-18-pub.asc
+
 apt update
 
 service bind9 stop
