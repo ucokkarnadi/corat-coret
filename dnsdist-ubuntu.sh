@@ -15,6 +15,11 @@ service bind9 stop
 systemctl disable bind9
 service systemd-resolved stop
 systemctl disable systemd-resolved
+rm -rf /etc/resolv.conf
+echo "search jsn.net.id
+nameserver 103.80.80.243
+nameserver 103.80.80.244
+" > /etc/resolv.conf
 apt remove -y --purge bind9 dnsdist
 apt autoremove -y
 rm -rf /var/cache/bind /etc/bind
