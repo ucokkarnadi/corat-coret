@@ -77,7 +77,7 @@ smnptr:add(newDNSName("28.172.in-addr.arpa."))
 smnptr:add(newDNSName("29.172.in-addr.arpa."))
 smnptr:add(newDNSName("30.172.in-addr.arpa."))
 smnptr:add(newDNSName("31.172.in-addr.arpa."))
-addAction(AndRule({SuffixMatchNodeRule(smnptr), QTypeRule(DNSQType.PTR)}), SpoofRawAction("\003JSN\010JaringanKU\000"))
+addAction(AndRule({SuffixMatchNodeRule(smnptr, true), QTypeRule(DNSQType.PTR)}), SpoofRawAction("\003JSN\010JaringanKU\000"))
 
 smndom = newSuffixMatchNode()
 smndom:add(newDNSName("iover4u.net"))
@@ -156,7 +156,7 @@ smndom:add(newDNSName("v.vitalnetprovedor.com.br"))
 smndom:add(newDNSName("vel1.neolink.com.br"))
 smndom:add(newDNSName("www.vibenettelecom.com.br"))
 
-addAction( SuffixMatchNodeRule(smndom), SpoofAction({"127.0.0.1", "::1"}))
+addAction( SuffixMatchNodeRule(smndom, true), SpoofAction({"127.0.0.1", "::1"}))
 
 
 ' > /etc/dnsdist/dnsdist.conf
