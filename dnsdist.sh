@@ -6,3 +6,4 @@ Pin-Priority: 600
 install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | tee /etc/apt/keyrings/dnsdist-19-pub.asc
 apt update
 apt -y install dnsdist
+systemctl stop dnsdist
