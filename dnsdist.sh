@@ -4,5 +4,5 @@ Pin: origin repo.powerdns.com
 Pin-Priority: 600
 " > /etc/apt/preferences.d/dnsdist-19
 sudo install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/dnsdist-19-pub.asc
-sudo apt-get update
-sudo apt-get install dnsdist
+sudo apt update
+sudo apt -y install dnsdist
