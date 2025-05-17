@@ -1,12 +1,13 @@
-/ip firewall filter
-add action=jump chain=forward comment="Accept Important ICMP Types" jump-target=ICMP protocol=icmp
-add action=jump chain=input jump-target=ICMP protocol=icmp
-add action=accept chain=ICMP comment="Echo Reply" icmp-options=0:0 protocol=icmp
-add action=accept chain=ICMP comment="Allow Echo Request" icmp-options=8:0 protocol=icmp
-add action=accept chain=ICMP comment="Allow Time Exceeded" icmp-options=11:0 protocol=icmp
-add action=accept chain=ICMP comment="Net Unreachable" icmp-options=3:0 protocol=icmp disabled=yes
-add action=accept chain=ICMP comment="Port Unreachable" icmp-options=3:3 protocol=icmp disabled=yes
-add action=accept chain=ICMP comment="Host Unreachable Fragmentation Required" icmp-options=3:4 protocol=icmp disabled=yes
-add action=return chain=ICMP protocol=icmp
-add action=drop chain=forward comment="Deny All Other Types" protocol=icmp
-add action=drop chain=input comment="Deny All Other Types" protocol=icmp
+/ip firewall raw
+add action=jump chain=prerouting comment="defconf: jump to ICMP chain" jump-target=icmp4 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: echo reply" dst-limit=100,200,src-address/1m40s icmp-options=0:0 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: echo reply" icmp-options=0:0 limit=5,10:packet protocol=icmp
+add action=accept chain=icmp4 comment="defconf: net unreachable" icmp-options=3:0 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: host unreachable" icmp-options=3:1 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: protocol unreachable" icmp-options=3:2 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: port unreachable" icmp-options=3:3 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: fragmentation needed" icmp-options=3:4 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: echo" dst-limit=100,200,dst-address/1m40s icmp-options=8:0 protocol=icmp
+add action=accept chain=icmp4 comment="defconf: echo" icmp-options=8:0 limit=5,10:packet protocol=icmp
+add action=accept chain=icmp4 comment="defconf: time exceeded " icmp-options=11:0-255 protocol=icmp
+add action=drop chain=icmp4 comment="defconf: drop other icmp" protocol=icmp
