@@ -1,0 +1,11 @@
+:if ([/ping 172.16.255.1 interval=1 count=5] != 0) do={
+:do {
+:if ([:resolve localhost server=172.16.255.1] = "127.0.0.1") do={
+/ip firewall nat enable [find comment="DNS-CT" disabled=yes]
+}
+} on-error={
+/ip firewall nat disable [find comment="DNS-CT" disabled=no]
+}
+} else={
+/ip firewall nat disable [find comment="DNS-CT" disabled=no]
+}
