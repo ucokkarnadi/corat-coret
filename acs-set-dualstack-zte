@@ -1,0 +1,11 @@
+  // Dualstack Mode
+declare("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.X_ZTE-COM_IPMode", {value: Date.now()}, {value: "Both"});
+commit();
+declare("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.2.X_ZTE-COM_IPMode", {value: Date.now()}, {value: "Both"});
+commit();
+
+  // IPv6 Auto Mode
+declare("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANIPConnection.1.X_ZTE-COM_IPv6AutoModeEnable", {value: Date.now()}, {value: true});
+commit();
+declare("InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.2.X_ZTE-COM_IPv6AutoModeEnable", {value: Date.now()}, {value: true});
+commit();
