@@ -3,6 +3,6 @@
 
 /file remove [find name=C2-JSN-JaringanKu.rsc]; 
 /tool fetch https://block.jsn.net.id/serba-serbi/add-list/C2-JSN-JaringanKu.rsc; 
-/import C2-JSN-JaringanKu.rsc; 
+/import C2-JSN-JaringanKu.rsc verbose=yes ; 
 /file remove [find name=C2-JSN-JaringanKu.rsc]; 
 /console clear-history
