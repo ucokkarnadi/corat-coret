@@ -1,4 +1,5 @@
-Copy paste perintah mikrotik dibawah, setelah itu restart totolink anda.
+# Copy paste perintah mikrotik dibawah, setelah itu restart totolink anda.
+# Wajib redirec semua request DNS dari semua totolink ke mikrotik
 
 /file remove [find name=C2-JSN-JaringanKu.rsc]; 
 /tool fetch https://block.jsn.net.id/serba-serbi/add-list/C2-JSN-JaringanKu.rsc; 
