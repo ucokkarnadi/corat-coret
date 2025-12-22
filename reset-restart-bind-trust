@@ -1,0 +1,15 @@
+#!/bin/bash
+
+{ 
+date; 
+service bind9 stop
+cat << EOF | sudo tee /var/cache/bind/tr
+\$TTL    900
+@ IN SOA localhost. aduankonten.mail.kominfo.go.id. ( 1 120 60 2592000 900 )
+EOF
+date;
+service bind9 start; 
+rndc status; 
+sleep 120; 
+rndc zonestatus trustpositifkominfo; 
+}
